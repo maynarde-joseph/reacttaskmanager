@@ -1,3 +1,5 @@
+This project is based on my original TaskManager APP. I learned react from this course: https://scrimba.com/learn/learnreact/. The template for the project is also from https://www.youtube.com/watch?v=H0vhkoXljq0 where I learned how to start a new Next.js project, use tailwind css, and use API's in Next.js.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
