@@ -6,12 +6,12 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-function SearchBar() {
+function SearchBar({ setTicketState }) {
   const [inputValue, setInputValue] = useState("");
-
+  const [prevTickets, setTickets] = setTicketState;
   const showSwal = () => {
     withReactContent(Swal).fire({
-      title: <i>Input something</i>,
+      title: <i>Start tracking:</i>,
       input: "text",
       inputValue,
       preConfirm: async () => {
@@ -33,6 +33,7 @@ function SearchBar() {
 
           const data = await response.json();
           console.log(data);
+          setTickets((prevTickets) => [...prevTickets, data]);
           // Handle the response data as needed
         } catch (error) {
           console.error("Error invoking API route:", error);

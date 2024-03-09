@@ -11,16 +11,15 @@ function NewTask() {
 
   const showSwal = () => {
     withReactContent(Swal).fire({
-      title: <i>Input something</i>,
+      title: <i>Get data for:</i>,
       input: "text",
       inputValue,
       preConfirm: async () => {
         const inputValue = Swal.getInput()?.value || "";
         setInputValue(inputValue);
-
         try {
           const response = await fetch(
-            "https://lutyiiaena4rb5lkbh7e4gj2zi0lxqcx.lambda-url.ap-southeast-2.on.aws/",
+            "https://f82t7r4fy0.execute-api.ap-southeast-2.amazonaws.com/dev",
             {
               method: "POST",
               headers: {

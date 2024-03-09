@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import TicketCard from "./(components)/TicketCard";
 import NewTask from "./(components)/NewTask";
 import SearchBar from "./(components)/SearchBar";
+import { useState } from "react";
 
 const getTickets = async () => {
   try {
@@ -19,19 +21,8 @@ const getTickets = async () => {
   }
 };
 
-const Dashboard = async () => {
-  // const data = await getTickets();
-
-  // Make sure we have tickets needed for production build.
-  // if (!data?.tickets) {
-  //   return <p>No tickets.</p>;
-  // }
-
-  // const tickets = data.tickets;
-  const tickets = [];
-  // const uniqueCategories = [
-  //   ...new Set(tickets?.map(({ category }) => category)),
-  // ];
+const Dashboard = () => {
+  const [tickets, setTickets] = useState([]);
 
   return (
     <div className="p-5">
@@ -39,7 +30,7 @@ const Dashboard = async () => {
         <div className="flex flex-row gap-4">
           <h3 className="text-white">Your stocks</h3>
           <NewTask />
-          <SearchBar />
+          <SearchBar setTicketState={[tickets, setTickets]} />
         </div>
       </div>
       <div className="lg:grid grid-cols-2 xl:grid-cols-4">
