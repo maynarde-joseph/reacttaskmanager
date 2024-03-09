@@ -1,10 +1,14 @@
 "use client";
 
-import { faCheck, faPenToSquare, faX } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMoneyBillTransfer,
+  faPenToSquare,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 
-const CompleteBlock = ({ id }) => {
+const InvestBlock = ({ id }) => {
   // const router = useRouter();
 
   // const deleteTicket = async () => {
@@ -18,11 +22,11 @@ const CompleteBlock = ({ id }) => {
 
   return (
     <FontAwesomeIcon
-      icon={faCheck}
-      className=" text-red-400 hover:cursor-pointer hover:text-red-200"
+      icon={faMoneyBillTransfer}
+      className=" text-red-400 hover:cursor-pointer hover:text-red-200 pt-1.5"
       // onClick={deleteTicket}
     />
   );
 };
 
-export default CompleteBlock;
+export default InvestBlock;

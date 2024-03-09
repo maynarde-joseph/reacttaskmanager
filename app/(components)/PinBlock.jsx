@@ -19,7 +19,7 @@ const PinBlock = ({ id }) => {
   return (
     <FontAwesomeIcon
       icon={faThumbTack}
-      className=" text-red-400 hover:cursor-pointer hover:text-red-200"
+      className=" text-red-400 hover:cursor-pointer hover:text-red-200 pt-1.5"
       // onClick={deleteTicket}
     />
   );

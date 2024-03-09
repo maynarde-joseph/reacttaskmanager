@@ -1,10 +1,14 @@
 "use client";
 
-import { faPenToSquare, faX } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleInfo,
+  faPenToSquare,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 
-const EditBlock = ({ id }) => {
+const DetailBlock = ({ id }) => {
   // const router = useRouter();
 
   // const deleteTicket = async () => {
@@ -18,11 +22,11 @@ const EditBlock = ({ id }) => {
 
   return (
     <FontAwesomeIcon
-      icon={faPenToSquare}
-      className=" text-red-400 hover:cursor-pointer hover:text-red-200"
+      icon={faCircleInfo}
+      className=" text-red-400 hover:cursor-pointer hover:text-red-200 pt-1.5"
       // onClick={deleteTicket}
     />
   );
 };
 
-export default EditBlock;
+export default DetailBlock;

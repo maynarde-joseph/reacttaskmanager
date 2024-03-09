@@ -1,5 +1,7 @@
 import React from "react";
 import TicketCard from "./(components)/TicketCard";
+import NewTask from "./(components)/NewTask";
+import SearchBar from "./(components)/SearchBar";
 
 const getTickets = async () => {
   try {
@@ -18,39 +20,32 @@ const getTickets = async () => {
 };
 
 const Dashboard = async () => {
-  const data = await getTickets();
+  // const data = await getTickets();
 
   // Make sure we have tickets needed for production build.
-  if (!data?.tickets) {
-    return <p>No tickets.</p>;
-  }
+  // if (!data?.tickets) {
+  //   return <p>No tickets.</p>;
+  // }
 
-  const tickets = data.tickets;
-
-  const uniqueCategories = [
-    ...new Set(tickets?.map(({ category }) => category)),
-  ];
+  // const tickets = data.tickets;
+  const tickets = [];
+  // const uniqueCategories = [
+  //   ...new Set(tickets?.map(({ category }) => category)),
+  // ];
 
   return (
     <div className="p-5">
-      <div>
-        {tickets &&
-          uniqueCategories?.map((uniqueCategory, categoryIndex) => (
-            <div key={categoryIndex} className="mb-4">
-              <h2>{uniqueCategory}</h2>
-              <div className="lg:grid grid-cols-2 xl:grid-cols-4 ">
-                {tickets
-                  .filter((ticket) => ticket.category === uniqueCategory)
-                  .map((filteredTicket, _index) => (
-                    <TicketCard
-                      id={_index}
-                      key={_index}
-                      ticket={filteredTicket}
-                    />
-                  ))}
-              </div>
-            </div>
-          ))}
+      <div className="flex flex-col pl-2">
+        <div className="flex flex-row gap-4">
+          <h3 className="text-white">Your stocks</h3>
+          <NewTask />
+          <SearchBar />
+        </div>
+      </div>
+      <div className="lg:grid grid-cols-2 xl:grid-cols-4">
+        {tickets.map((ticket, index) => (
+          <TicketCard id={index} key={index} ticket={ticket} />
+        ))}
       </div>
     </div>
   );
