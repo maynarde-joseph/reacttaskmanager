@@ -69,7 +69,7 @@ const DetailBlock = ({ id }) => {
           const response = await fetch(
             "https://f82t7r4fy0.execute-api.ap-southeast-2.amazonaws.com/dev",
             {
-              method: "POST",
+              method: "GET",
               headers: {
                 "Content-Type": "application/json",
               },
