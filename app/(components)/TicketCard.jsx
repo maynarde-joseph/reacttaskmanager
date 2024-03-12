@@ -8,7 +8,6 @@ import LargestChange from "./LargestChange";
 const TicketCard = ({ ticket, setTicketState, arrayId }) => {
   // on touch we can do a popup that does something
   const ticketData = JSON.parse(ticket);
-  console.log(ticketData.dataset_type);
   return (
     <div className="flex flex-col bg-card hover:bg-card-hover rounded-md shadow-lg p-3 m-2">
       <div className="flex mb-3">

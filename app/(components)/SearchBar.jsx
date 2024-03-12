@@ -32,7 +32,6 @@ function SearchBar({ setTicketState }) {
           );
 
           const data = await response.json();
-          console.log(data.body);
           setTickets((prevTickets) => [...prevTickets, data.body]);
           let toPrint = JSON.stringify(data, null, 2);
           Swal.fire({

@@ -2,7 +2,6 @@
 import React from "react";
 import { faThumbTack } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
@@ -10,7 +9,7 @@ import withReactContent from "sweetalert2-react-content";
 const PinBlock = ({ symbol }) => {
   const investTicket = () => {
     withReactContent(Swal).fire({
-      title: <i>Start tracking:</i>,
+      title: <i>Get current value:</i>,
       preConfirm: async () => {
         try {
           const response = await fetch(

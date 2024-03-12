@@ -1,9 +1,9 @@
-// import { faHome, faTicket } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// Add for when we use a logo:
+// import Image from "next/image";
+// import Logo from "/Users/maynardejoseph/Documents/react-taskmanager/app/images/random.jpg";
+
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
-import Logo from "/Users/maynardejoseph/Documents/react-taskmanager/app/images/random.jpg";
 import {
   faAddressCard,
   faArrowRightFromBracket,

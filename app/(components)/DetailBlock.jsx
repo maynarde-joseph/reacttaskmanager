@@ -4,9 +4,8 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
 
-const DetailBlock = ({ id }) => {
+const DetailBlock = ({ symbolId }) => {
   const emptyForm = {
-    symbol: "",
     start_date: "",
     end_date: "",
     SMA: false,
@@ -19,9 +18,8 @@ const DetailBlock = ({ id }) => {
 
   const showPopupForm = () => {
     Swal.fire({
-      title: "Technical Analysis Form",
+      title: "Preproccessing Form",
       html:
-        '<input id="symbol" class="swal2-input" placeholder="Symbol">' +
         '<input id="start_date" class="swal2-input" placeholder="Start Date" type="date">' +
         '<input id="end_date" class="swal2-input" placeholder="End Date" type="date">' +
         '<div class="swal2-checkbox-container">' +
@@ -46,7 +44,7 @@ const DetailBlock = ({ id }) => {
       preConfirm: async () => {
         const userPref = {
           selections: {
-            symbol: document.getElementById("symbol").value || "",
+            symbol: symbolId,
             start_date: document.getElementById("start_date").value || "",
             end_date: document.getElementById("end_date").value || "",
             metrics: {
