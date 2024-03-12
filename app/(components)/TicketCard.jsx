@@ -5,46 +5,30 @@ import DetailBlock from "./DetailBlock";
 import InvestBlock from "./InvestBlock";
 
 const TicketCard = ({ ticket }) => {
-  const formatTimeStamp = (timestamp) => {
-    const options = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    };
-
-    const date = new Date(timestamp);
-    const formattedDate = date.toLocaleString("en-US", options);
-
-    return formattedDate;
-  };
-
   // on touch we can do a popup that does something
   return (
     <div className="flex flex-col bg-card hover:bg-card-hover rounded-md shadow-lg p-3 m-2">
       <div className="flex mb-3">
         {/* <PriorityDisplay priority={ticket.priority} /> */}
-        <h4>{ticket.title}</h4>
+        <h4>{ticket.dataset_type.split("_")[0]}</h4>
         <div className="ml-auto flex align-middle">
           <div className="ml-auto mb-3 pr-2">
-            <InvestBlock id={ticket._id} />
+            <InvestBlock id={ticket.dataset_id} />
           </div>
           <div className="ml-auto mb-3 pr-2">
-            <PinBlock id={ticket._id} />
+            <PinBlock id={ticket.dataset_id} />
           </div>
           <div className="ml-auto mb-3 pr-2">
-            <DetailBlock id={ticket._id} />
+            <DetailBlock id={ticket.dataset_id} />
           </div>
           <div className="ml-auto mb-3 pr-2">
-            <DeleteBlock id={ticket._id} />
+            <DeleteBlock id={ticket.dataset_id} />
           </div>
         </div>
       </div>
       {/* <h4>{ticket.title}</h4> */}
       <hr className="h-px border-0 bg-page mb-2" />
-      <p className="whitespace-pre-wrap">{ticket.description}</p>
+      <p className="whitespace-pre-wrap">{ticket.dataset_id}</p>
       {/* <div className="flex-grow"></div>
       <div className="flex mt-2">
         <div className="flex flex-col">
