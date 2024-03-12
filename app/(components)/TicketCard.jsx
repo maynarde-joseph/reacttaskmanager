@@ -3,6 +3,7 @@ import DeleteBlock from "./DeleteBlock";
 import PinBlock from "./PinBlock";
 import DetailBlock from "./DetailBlock";
 import InvestBlock from "./InvestBlock";
+import LargestChange from "./LargestChange";
 
 const TicketCard = ({ ticket, setTicketState, arrayId }) => {
   // on touch we can do a popup that does something
@@ -19,6 +20,9 @@ const TicketCard = ({ ticket, setTicketState, arrayId }) => {
           </div>
           <div className="ml-auto mb-3 pr-2">
             <PinBlock id={ticketData.dataset_type.split("_")[0]} />
+          </div>
+          <div className="ml-auto mb-3 pr-2">
+            <LargestChange id={ticketData.dataset_type.split("_")[0]} />
           </div>
           <div className="ml-auto mb-3 pr-2">
             <DetailBlock id={ticketData.dataset_type.split("_")[0]} />
