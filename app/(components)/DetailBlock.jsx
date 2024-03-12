@@ -4,7 +4,7 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
 
-const DetailBlock = ({ symbolId }) => {
+const DetailBlock = ({ id }) => {
   const emptyForm = {
     start_date: "",
     end_date: "",
@@ -44,7 +44,7 @@ const DetailBlock = ({ symbolId }) => {
       preConfirm: async () => {
         const userPref = {
           selections: {
-            symbol: symbolId,
+            symbol: id,
             start_date: document.getElementById("start_date").value || "",
             end_date: document.getElementById("end_date").value || "",
             metrics: {
@@ -63,21 +63,36 @@ const DetailBlock = ({ symbolId }) => {
             },
           },
         };
+
         try {
           const response = await fetch(
-            "https://f82t7r4fy0.execute-api.ap-southeast-2.amazonaws.com/dev",
+            `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/preproccessing?symbol=${encodeURIComponent(
+              userPref.selections.symbol
+            )}&start_date=${encodeURIComponent(
+              userPref.selections.start_date
+            )}&end_date=${encodeURIComponent(
+              userPref.selections.end_date
+            )}&sma=${encodeURIComponent(
+              userPref.selections.metrics.SMA
+            )}&ema_enabled=${encodeURIComponent(
+              userPref.selections.metrics.EMA.enabled
+            )}&ema_period=${encodeURIComponent(
+              userPref.selections.metrics.EMA.period
+            )}rsi_enabled=${encodeURIComponent(
+              userPref.selections.metrics.RSI.enabled
+            )}rsi_period=${encodeURIComponent(
+              userPref.selections.metrics.RSI.period
+            )}&macd=${encodeURIComponent(userPref.selections.metrics.MACD)}`,
             {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(userPref),
             }
           );
 
           const data = await response.json();
           let toPrint = JSON.stringify(data, null, 2);
-          setTickets((prevTickets) => [...prevTickets, data]);
           Swal.fire({
             title: "API Response",
             text: toPrint,

@@ -20,7 +20,7 @@ function SearchBar({ setTicketState }) {
 
         try {
           const response = await fetch(
-            `https://kqaxf2taic.execute-api.ap-southeast-2.amazonaws.com/dev?symbol=${encodeURIComponent(
+            `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/retrieval?symbol=${encodeURIComponent(
               inputValue
             )}`,
             {

@@ -20,7 +20,7 @@ function NewTask() {
         setInputValue(inputValue);
         try {
           const response = await fetch(
-            "https://f82t7r4fy0.execute-api.ap-southeast-2.amazonaws.com/dev",
+            "https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/upload",
             {
               method: "POST",
               headers: {
