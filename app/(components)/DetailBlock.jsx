@@ -2,10 +2,7 @@
 
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import { useState } from "react";
 
 const DetailBlock = ({ id }) => {
   const emptyForm = {
@@ -46,23 +43,53 @@ const DetailBlock = ({ id }) => {
         '<label for="macd" class="swal2-label">MACD</label>' +
         "</div>",
       focusConfirm: false,
-      preConfirm: () => {
-        return {
-          symbol: document.getElementById("symbol").value,
-          start_date: document.getElementById("start_date").value,
-          end_date: document.getElementById("end_date").value,
-          SMA: document.getElementById("sma").checked,
-          EMA_enabled: document.getElementById("ema_enabled").checked,
-          EMA_period: parseInt(document.getElementById("ema_period").value),
-          RSI_enabled: document.getElementById("rsi_enabled").checked,
-          RSI_period: parseInt(document.getElementById("rsi_period").value),
-          MACD: document.getElementById("macd").checked,
+      preConfirm: async () => {
+        const userPref = {
+          selections: {
+            symbol: document.getElementById("symbol").value || "",
+            start_date: document.getElementById("start_date").value || "",
+            end_date: document.getElementById("end_date").value || "",
+            metrics: {
+              SMA: document.getElementById("sma").checked,
+              EMA: {
+                enabled: document.getElementById("ema_enabled").checked,
+                period:
+                  parseInt(document.getElementById("ema_period").value) || 0,
+              },
+              RSI: {
+                enabled: document.getElementById("rsi_enabled").checked,
+                period:
+                  parseInt(document.getElementById("rsi_period").value) || 0,
+              },
+              MACD: document.getElementById("macd").checked,
+            },
+          },
         };
+        try {
+          const response = await fetch(
+            "https://f82t7r4fy0.execute-api.ap-southeast-2.amazonaws.com/dev",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userPref),
+            }
+          );
+
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error("Error invoking API route:", error);
+          throw error;
+        }
       },
     }).then((result) => {
-      if (result.isConfirmed) {
-        // Handle form submission
-        console.log("Form data:", result.value);
+      if (result.isConfirmed && result.value) {
+        Swal.fire({
+          title: <i>API Response:</i>,
+          html: <pre>{JSON.stringify(result.value, null, 2)}</pre>,
+        });
       }
     });
   };
