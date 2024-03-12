@@ -4,16 +4,14 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 
-const DeleteBlock = ({ id }) => {
-  const router = useRouter();
+const DeleteBlock = ({ id, setTicketState, arrayId }) => {
+  const [prevTickets, setTickets] = setTicketState;
 
-  const deleteTicket = async () => {
-    const res = await fetch(`http://localhost:3000/api/Tickets/${id}`, {
-      method: "DELETE",
-    });
-    if (res.ok) {
-      router.refresh();
-    }
+  const deleteTicket = () => {
+    const updatedTickets = prevTickets.filter(
+      (ticket) => ticket.dataset_type != id
+    );
+    setTickets(updatedTickets);
   };
 
   return (

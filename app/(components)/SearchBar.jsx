@@ -20,7 +20,7 @@ function SearchBar({ setTicketState }) {
 
         try {
           const response = await fetch(
-            `https://li2umvobnkc47pt5d4dcyjedwm0qaixq.lambda-url.ap-southeast-2.on.aws/?symbol=${encodeURIComponent(
+            `https://kqaxf2taic.execute-api.ap-southeast-2.amazonaws.com/dev?symbol=${encodeURIComponent(
               inputValue
             )}`,
             {
@@ -32,12 +32,16 @@ function SearchBar({ setTicketState }) {
           );
 
           const data = await response.json();
-          console.log(data);
-          setTickets((prevTickets) => [...prevTickets, data]);
-          // Handle the response data as needed
+          console.log(data.body);
+          setTickets((prevTickets) => [...prevTickets, data.body]);
+          let toPrint = JSON.stringify(data, null, 2);
+          Swal.fire({
+            title: "API Response",
+            text: toPrint,
+          });
         } catch (error) {
           console.error("Error invoking API route:", error);
-          // Handle the error
+          throw error;
         }
       },
     });

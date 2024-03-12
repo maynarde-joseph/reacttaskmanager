@@ -25,16 +25,19 @@ function NewTask() {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ symbol: inputValue }),
+              body: JSON.stringify({ body: { symbol: inputValue } }),
             }
           );
 
           const data = await response.json();
-          console.log(data);
-          // Handle the response data as needed
+          let toPrint = JSON.stringify(data, null, 2);
+          Swal.fire({
+            title: "API Response",
+            text: toPrint,
+          });
         } catch (error) {
           console.error("Error invoking API route:", error);
-          // Handle the error
+          throw error;
         }
       },
     });

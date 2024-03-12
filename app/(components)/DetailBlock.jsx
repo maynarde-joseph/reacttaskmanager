@@ -59,7 +59,7 @@ const DetailBlock = ({ id }) => {
               RSI: {
                 enabled: document.getElementById("rsi_enabled").checked,
                 period:
-                  parseInt(document.getElementById("rsi_period").value) || 0,
+                  parseInt(document.getElementById("rsi_period").value) || 14,
               },
               MACD: document.getElementById("macd").checked,
             },
@@ -78,19 +78,17 @@ const DetailBlock = ({ id }) => {
           );
 
           const data = await response.json();
-          console.log(data);
+          let toPrint = JSON.stringify(data, null, 2);
+          setTickets((prevTickets) => [...prevTickets, data]);
+          Swal.fire({
+            title: "API Response",
+            text: toPrint,
+          });
         } catch (error) {
           console.error("Error invoking API route:", error);
           throw error;
         }
       },
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        Swal.fire({
-          title: <i>API Response:</i>,
-          html: <pre>{JSON.stringify(result.value, null, 2)}</pre>,
-        });
-      }
     });
   };
 
