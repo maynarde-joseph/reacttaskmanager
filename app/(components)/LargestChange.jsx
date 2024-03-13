@@ -8,7 +8,7 @@ import withReactContent from "sweetalert2-react-content";
 import { useState } from "react";
 
 // for latest data
-const LargestChange = ({ symbol }) => {
+const LargestChange = ({ id }) => {
   const [inputValue, setInputValue] = useState("");
 
   const investTicket = () => {
@@ -19,11 +19,13 @@ const LargestChange = ({ symbol }) => {
       preConfirm: async () => {
         const inputValue = Swal.getInput()?.value || "";
         setInputValue(inputValue);
+        console.log(id);
+        console.log(inputValue);
         try {
           const response = await fetch(
-            `https://li2umvobnkc47pt5d4dcyjedwm0qaixq.lambda-url.ap-southeast-2.on.aws/?symbol=${encodeURIComponent(
-              symbol
-            )}?sort_type=${encodeURIComponent(inputValue)}`,
+            `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/changes?symbol=${encodeURIComponent(
+              id
+            )}&sort_type=${encodeURIComponent(inputValue)}`,
             {
               method: "GET",
               headers: {

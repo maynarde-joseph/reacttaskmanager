@@ -6,15 +6,15 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 // for latest data
-const PinBlock = ({ symbol }) => {
+const PinBlock = ({ id }) => {
   const investTicket = () => {
     withReactContent(Swal).fire({
       title: <i>Get current value:</i>,
       preConfirm: async () => {
         try {
           const response = await fetch(
-            `https://li2umvobnkc47pt5d4dcyjedwm0qaixq.lambda-url.ap-southeast-2.on.aws/?symbol=${encodeURIComponent(
-              symbol
+            `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/latest?symbol=${encodeURIComponent(
+              id
             )}`,
             {
               method: "GET",
@@ -25,7 +25,6 @@ const PinBlock = ({ symbol }) => {
           );
           const data = await response.json();
           let toPrint = JSON.stringify(data, null, 2);
-          setTickets((prevTickets) => [...prevTickets, data]);
           Swal.fire({
             title: "API Response",
             text: toPrint,
