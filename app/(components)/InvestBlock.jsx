@@ -8,21 +8,42 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 // for changing currencry
-const InvestBlock = ({ symbol }) => {
-  const [inputValue, setInputValue] = useState("");
+const InvestBlock = ({ id }) => {
+  const emptyForm = {
+    symbol: "",
+    base_curr: "",
+    target_curr: "",
+    selected_keys: "",
+  };
   const investTicket = () => {
-    withReactContent(Swal).fire({
-      title: <i>Convert currancy to:</i>,
-      input: "text",
-      inputValue,
+    Swal.fire({
+      title: "Currency exchange Form",
+      html:
+        '<input id="base_curr" class="swal2-input" placeholder="base_curr" type="string">' +
+        '<input id="target_curr" class="swal2-input" placeholder="target_curr" type="string">' +
+        '<input id="selected_keys" class="swal2-input" placeholder="selected_keys" type="string">',
+      focusConfirm: false,
       preConfirm: async () => {
-        const inputValue = Swal.getInput()?.value || "";
-        setInputValue(inputValue);
+        const userPref = {
+          selections: {
+            symbol: id,
+            base_curr: document.getElementById("base_curr").value || "",
+            target_curr: document.getElementById("target_curr").value || "",
+            selected_keys: document.getElementById("selected_keys").value || "",
+          },
+        };
+
         try {
           const response = await fetch(
-            `https://li2umvobnkc47pt5d4dcyjedwm0qaixq.lambda-url.ap-southeast-2.on.aws/?symbol=${encodeURIComponent(
-              symbol
-            )}?region=${encodeURIComponent(inputValue)}`,
+            `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/convert?symbol=${encodeURIComponent(
+              userPref.selections.symbol
+            )}&base_curr=${encodeURIComponent(
+              userPref.selections.base_curr
+            )}&target_curr=${encodeURIComponent(
+              userPref.selections.target_curr
+            )}&selected_keys=${encodeURIComponent(
+              userPref.selections.selected_keys
+            )}`,
             {
               method: "GET",
               headers: {
@@ -30,9 +51,9 @@ const InvestBlock = ({ symbol }) => {
               },
             }
           );
+
           const data = await response.json();
           let toPrint = JSON.stringify(data, null, 2);
-          setTickets((prevTickets) => [...prevTickets, data]);
           Swal.fire({
             title: "API Response",
             text: toPrint,
