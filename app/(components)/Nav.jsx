@@ -19,7 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Nav = () => {
   return (
-    <div className="bg-gray-900 text-white left-0 top-0 bottom-0 p-4">
+    <div className="bg-gray-900 text-white left-0 top-0 bottom-0 p-4 hidden sm:block">
       <div className="flex items-center mb-4">
         {/* <Image
           src={Logo}
