@@ -4,6 +4,21 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
 
+function convertDateFormat(dateString) {
+  // Split the date string into an array
+  const dateArray = dateString.split("-");
+
+  // Extract the year, month, and day from the array
+  const year = dateArray[0];
+  const month = dateArray[1];
+  const day = dateArray[2];
+
+  // Construct the new date string in the desired format
+  const newDateString = `${day}-${month}-${year}`;
+
+  return newDateString;
+}
+
 const DetailBlock = ({ id }) => {
   const emptyForm = {
     start_date: "",
@@ -69,20 +84,22 @@ const DetailBlock = ({ id }) => {
             `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/preproccessing?symbol=${encodeURIComponent(
               userPref.selections.symbol
             )}&start_date=${encodeURIComponent(
-              userPref.selections.start_date
+              convertDateFormat(userPref.selections.start_date)
             )}&end_date=${encodeURIComponent(
-              userPref.selections.end_date
-            )}&sma=${encodeURIComponent(
+              convertDateFormat(userPref.selections.end_date)
+            )}&SMA_enabled=${encodeURIComponent(
               userPref.selections.metrics.SMA
-            )}&ema_enabled=${encodeURIComponent(
+            )}&EMA_enabled=${encodeURIComponent(
               userPref.selections.metrics.EMA.enabled
-            )}&ema_period=${encodeURIComponent(
+            )}&EMA_period=${encodeURIComponent(
               userPref.selections.metrics.EMA.period
-            )}rsi_enabled=${encodeURIComponent(
+            )}&RSI_enabled=${encodeURIComponent(
               userPref.selections.metrics.RSI.enabled
-            )}rsi_period=${encodeURIComponent(
+            )}&RSI_period=${encodeURIComponent(
               userPref.selections.metrics.RSI.period
-            )}&macd=${encodeURIComponent(userPref.selections.metrics.MACD)}`,
+            )}&MACD_enabled=${encodeURIComponent(
+              userPref.selections.metrics.MACD
+            )}`,
             {
               method: "GET",
               headers: {
