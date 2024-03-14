@@ -32,7 +32,9 @@ function SearchBar({ setTicketState }) {
           );
 
           const data = await response.json();
-          setTickets((prevTickets) => [...prevTickets, data.body]);
+          if (data.statusCode == 200) {
+            setTickets((prevTickets) => [...prevTickets, data.body]);
+          }
           let toPrint = JSON.stringify(data, null, 2);
           Swal.fire({
             title: "API Response",
