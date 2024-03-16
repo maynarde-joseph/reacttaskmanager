@@ -1,34 +1,16 @@
-"use client";
-import React from "react";
-import TicketCard from "./(components)/TicketCard";
-import NewTask from "./(components)/NewTask";
-import SearchBar from "./(components)/SearchBar";
-import { useState } from "react";
+import LoginForm from "./(components)/LoginForm";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
-const Dashboard = () => {
-  const [tickets, setTickets] = useState([]);
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
+  if (session) redirect("/dashboard");
 
   return (
-    <div className="p-5">
-      <div className="flex flex-col pl-2">
-        <div className="flex flex-row gap-4">
-          <h3 className="text-white">Your stocks</h3>
-          <NewTask />
-          <SearchBar setTicketState={[tickets, setTickets]} />
-        </div>
-      </div>
-      <div className="lg:grid grid-cols-2 xl:grid-cols-4">
-        {tickets.map((ticket, index) => (
-          <TicketCard
-            id={index}
-            key={index}
-            ticket={ticket}
-            setTicketState={[tickets, setTickets]}
-          />
-        ))}
-      </div>
-    </div>
+    <main>
+      <LoginForm />
+    </main>
   );
-};
-
-export default Dashboard;
+}
