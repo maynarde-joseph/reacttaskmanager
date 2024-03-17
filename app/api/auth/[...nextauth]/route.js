@@ -48,56 +48,33 @@ export const authOptions = {
       if (trigger === "update" && session?.stocks) {
         token.stocks = session.stocks;
 
-        // MOVED UPDATE FUNCTIONALITY HERE
-        // IF CODE BREAKS PLEASE MOVE IT OUT
-        const updatedTicketData = {
-          watched_stocks: token.stocks,
-          // curr_investments: token.curr_inv,
-        };
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { watched_stocks: token.stocks },
+          { new: true }
+        );
 
-        const updatedUser = await fetch(
-          `${process.env.NEXTAUTH_URL}/api/stocks/${token.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ formData: updatedTicketData }),
-          }
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Ticket updated successfully:", data);
-          })
-          .catch((error) => {
-            console.error("Error updating ticket:", error);
-          });
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
       }
 
       if (trigger === "update" && session?.curr_inv) {
         token.curr_inv = session.curr_inv;
 
-        const updatedTicketData = {
-          curr_investments: token.curr_inv,
-        };
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { curr_investments: token.curr_inv },
+          { new: true }
+        );
 
-        const updatedUser = await fetch(
-          `${process.env.NEXTAUTH_URL}/api/stocks/${token.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ formData: updatedTicketData }),
-          }
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Ticket updated successfully:", data);
-          })
-          .catch((error) => {
-            console.error("Error updating ticket:", error);
-          });
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
       }
 
       // we can add more later
