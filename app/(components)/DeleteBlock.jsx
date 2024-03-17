@@ -2,9 +2,10 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
+import { useSession } from "next-auth/react";
 
-const DeleteBlock = ({ id, setTicketState }) => {
-  const [prevTickets, setTickets] = setTicketState;
+const DeleteBlock = ({ id }) => {
+  const { data: session, status, update } = useSession();
 
   const deleteTicket = () => {
     Swal.fire({
@@ -17,10 +18,12 @@ const DeleteBlock = ({ id, setTicketState }) => {
       confirmButtonText: "Yes, end it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const updatedTickets = prevTickets.filter(
-          (ticket) => JSON.parse(ticket).dataset_type.split("_")[0] != id
-        );
-        setTickets(updatedTickets);
+        let tempStocks = session?.user.stocks;
+        console.log("THIS IS ID", id);
+        console.log("THIS IS TEMP", tempStocks);
+        tempStocks = tempStocks.filter((item) => item !== id);
+        console.log("THIS IS TEMP AFTER", tempStocks);
+        update({ stocks: tempStocks });
         Swal.fire("Deleted!", "The ticket has been deleted.", "success");
       }
     });

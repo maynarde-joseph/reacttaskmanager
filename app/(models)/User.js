@@ -12,19 +12,20 @@ const userSchema = new Schema(
     curr_investments: [
       {
         stock: String,
-        amount: Number,
-        buy_date: String,
-        stock_value: Number,
+        amount: Schema.Types.Decimal128,
+        buy_date: Date,
+        sell_date: Date,
+        stock_value: Schema.Types.Decimal128,
         currency: String,
       },
     ],
     prev_investments: [
       {
         stock: String,
-        amount: Number,
-        buy_date: String,
-        sell_date: String,
-        stock_value: Number,
+        amount: Schema.Types.Decimal128,
+        buy_date: Date,
+        sell_date: Date,
+        stock_value: Schema.Types.Decimal128,
         currency: String,
       },
     ],

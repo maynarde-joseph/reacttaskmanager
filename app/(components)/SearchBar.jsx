@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { useSession } from "next-auth/react";
 
-function SearchBar({ setTicketState }) {
+function SearchBar() {
   const [inputValue, setInputValue] = useState("");
-  const [prevTickets, setTickets] = setTicketState;
+  const { data: session, status, update } = useSession();
+
   const showSwal = () => {
     withReactContent(Swal).fire({
       title: <i>Start tracking:</i>,
@@ -18,31 +20,23 @@ function SearchBar({ setTicketState }) {
         const inputValue = Swal.getInput()?.value || "";
         setInputValue(inputValue);
 
-        try {
-          const response = await fetch(
-            `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/retrieval?symbol=${encodeURIComponent(
-              inputValue
-            )}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+        const response = await fetch(
+          `../api/latest?symbol=${encodeURIComponent(inputValue)}`
+        );
 
-          const data = await response.json();
-          if (data.statusCode == 200) {
-            setTickets((prevTickets) => [...prevTickets, data.body]);
-          }
-          let toPrint = JSON.stringify(data, null, 2);
-          Swal.fire({
-            title: "API Response",
-            text: toPrint,
-          });
-        } catch (error) {
-          console.error("Error invoking API route:", error);
-          throw error;
+        if (response.ok) {
+          const { data } = await response.json();
+          const bodyValue = data.body;
+          const stockInfo = {
+            stock_name: inputValue,
+            current_price: bodyValue,
+          };
+          // setTickets((prevTickets) => [...prevTickets, stockInfo]);
+          let tempStocks = session?.user.stocks;
+          tempStocks.push(stockInfo.stock_name);
+          update({ stocks: tempStocks });
+        } else {
+          console.error("Error:", response.status);
         }
       },
     });

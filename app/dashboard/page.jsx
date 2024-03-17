@@ -6,9 +6,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
-
   if (!session) redirect("/");
-
   return (
     <div className="flex h-screen max-h-screen bg-zinc-800">
       <Nav />

@@ -3,9 +3,7 @@
 import React from "react";
 import { faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 // for changing currencry
 const InvestBlock = ({ id }) => {
