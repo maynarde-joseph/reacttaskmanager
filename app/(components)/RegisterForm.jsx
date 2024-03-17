@@ -4,7 +4,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import bg from "@/public/2.jpg";
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
