@@ -1,8 +1,8 @@
 export async function GET(request) {
   // console.log(request.nextUrl.searchParams.get("symbol"));
+  const inputValue = request.nextUrl.searchParams.get("symbol");
   try {
     // const { searchParams } = request.nextUrl.searchParams;
-    const inputValue = request.nextUrl.searchParams.get("symbol");
 
     const response = await fetch(
       `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/latest?symbol=${encodeURIComponent(
