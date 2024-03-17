@@ -43,7 +43,7 @@ export const authOptions = {
   },
   callbacks: {
     async jwt({ session, token, user, trigger }) {
-      console.log("jwt", { session, token, user, trigger });
+      // console.log("jwt", { session, token, user, trigger });
 
       if (trigger === "update" && session?.stocks) {
         token.stocks = session.stocks;
@@ -90,7 +90,7 @@ export const authOptions = {
       return token;
     },
     async session({ session, token, user }) {
-      console.log("session", { session, token, user });
+      // console.log("session", { session, token, user });
       // we can add more later
       return {
         ...session,

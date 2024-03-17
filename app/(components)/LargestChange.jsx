@@ -21,11 +21,6 @@ const LargestChange = ({ id, valueX }) => {
         const inputValue = Swal.getInput()?.value || 0;
         const quantity = parseInt(inputValue);
         const totalStock = quantity / valueX;
-        console.log("Are you sure you want to buy stock(s)", {
-          quantity,
-          id,
-          totalStock,
-        });
         if (quantity > 0) {
           await Swal.fire({
             title: "Confirm Investment",
@@ -43,7 +38,6 @@ const LargestChange = ({ id, valueX }) => {
                 stock_value: quantity,
                 currency: "USD",
               };
-              console.log("THE INVESTMENT", investmentObj);
               let tempInvestments = session?.user.curr_inv;
               // WHY DOES PUSH RETURN A NUMBER
               tempInvestments.push(investmentObj);

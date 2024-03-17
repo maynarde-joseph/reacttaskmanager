@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const NameTag = () => {
   const { data: session } = useSession();
-  console.log(session?.user?.name);
   return (
     <div className="bg-nav p-4 mb-4 flex flex-row gap-4 rounded hover:bg-gray-800 py-2 px-4">
       <FontAwesomeIcon

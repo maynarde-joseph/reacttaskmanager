@@ -29,8 +29,7 @@ const StockBoard = () => {
   const { data: session, status, update } = useSession();
 
   let allStocks = session?.user?.stocks;
-  console.log("all stocks:", { allStocks });
-  console.log("session", { session });
+
   useEffect(() => {
     const fetchStockData = async () => {
       const promises = allStocks?.map((stock) => getCurrData(stock));

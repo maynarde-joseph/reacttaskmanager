@@ -19,10 +19,7 @@ const DeleteBlock = ({ id }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         let tempStocks = session?.user.stocks;
-        console.log("THIS IS ID", id);
-        console.log("THIS IS TEMP", tempStocks);
         tempStocks = tempStocks.filter((item) => item !== id);
-        console.log("THIS IS TEMP AFTER", tempStocks);
         update({ stocks: tempStocks });
         Swal.fire("Deleted!", "The ticket has been deleted.", "success");
       }
