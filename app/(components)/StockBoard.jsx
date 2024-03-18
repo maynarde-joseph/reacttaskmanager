@@ -49,17 +49,12 @@ const StockBoard = () => {
         <div className="flex flex-row gap-4">
           <h3 className="text-white">Your stocks</h3>
           <NewTask />
-          <SearchBar setTicketState={[stockData, setStockData]} />
+          <SearchBar />
         </div>
       </div>
       <div className="lg:grid grid-cols-2 xl:grid-cols-4">
         {stockData.map((ticket, index) => (
-          <TicketCard
-            id={index}
-            key={index}
-            ticket={ticket}
-            setTicketState={[stockData, setStockData]}
-          />
+          <TicketCard id={index} key={index} ticket={ticket} />
         ))}
       </div>
     </div>

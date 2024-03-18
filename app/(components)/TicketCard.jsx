@@ -5,7 +5,7 @@ import DetailBlock from "./DetailBlock";
 import InvestBlock from "./InvestBlock";
 import LargestChange from "./LargestChange";
 
-const TicketCard = ({ ticket, setTicketState, arrayId, db_id }) => {
+const TicketCard = ({ ticket, arrayId, db_id }) => {
   // on touch we can do a popup that does something
   const ticketData = ticket;
   return (
@@ -29,12 +29,7 @@ const TicketCard = ({ ticket, setTicketState, arrayId, db_id }) => {
             <DetailBlock id={ticketData.stock_name} />
           </div>
           <div className="ml-auto mb-3 pr-2">
-            <DeleteBlock
-              arrayId={arrayId}
-              id={ticketData.stock_name}
-              setTicketState={setTicketState}
-              db_id={db_id}
-            />
+            <DeleteBlock id={ticketData.stock_name} />
           </div>
         </div>
       </div>
