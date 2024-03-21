@@ -4,40 +4,49 @@ import PinBlock from "./PinBlock";
 import DetailBlock from "./DetailBlock";
 import InvestBlock from "./InvestBlock";
 import LargestChange from "./LargestChange";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-const TicketCard = ({ ticket, arrayId, db_id }) => {
+const TicketCard = ({ ticket }) => {
   // on touch we can do a popup that does something
   const ticketData = ticket;
   return (
-    <div className="flex flex-col bg-zinc-800 hover:bg-card-hover rounded-md shadow-lg p-3 m-2">
-      <div className="flex mb-3">
-        <h4>{ticketData.stock_name}</h4>
-        <div className="ml-auto flex align-middle">
-          <div className="ml-auto mb-3 pr-2">
-            <InvestBlock id={ticketData.stock_name} />
-          </div>
-          <div className="ml-auto mb-3 pr-2">
-            <PinBlock id={ticketData.stock_name} />
-          </div>
-          <div className="ml-auto mb-3 pr-2">
-            <LargestChange
-              id={ticketData.stock_name}
-              valueX={ticketData.current_price}
-            />
-          </div>
-          <div className="ml-auto mb-3 pr-2">
-            <DetailBlock id={ticketData.stock_name} />
-          </div>
-          <div className="ml-auto mb-3 pr-2">
-            <DeleteBlock id={ticketData.stock_name} />
+    <Card className="flex flex-col rounded-md shadow-lg p-3 m-1 pt-0 pb-0 mb-0 mt-0">
+      <CardHeader>
+        <div className="flex">
+          <CardTitle>{ticketData.stock_name}</CardTitle>
+          <div className="ml-auto flex align-middle">
+            <div className="ml-auto pr-2">
+              <InvestBlock id={ticketData.stock_name} />
+            </div>
+            <div className="ml-auto pr-2">
+              <PinBlock id={ticketData.stock_name} />
+            </div>
+            <div className="ml-auto pr-2">
+              <LargestChange
+                id={ticketData.stock_name}
+                valueX={ticketData.current_price}
+              />
+            </div>
+            <div className="ml-auto pr-2">
+              <DetailBlock id={ticketData.stock_name} />
+            </div>
+            <div className="ml-auto pr-2">
+              <DeleteBlock id={ticketData.stock_name} />
+            </div>
           </div>
         </div>
-      </div>
-      <hr className="h-px border-0 bg-page mb-2" />
-      <p className="whitespace-pre-wrap">
-        Current value: {ticketData.current_price}
-      </p>
-    </div>
+        <CardDescription>Change: -5.60(17.2%)</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>Last: {ticketData.current_price}</p>
+      </CardContent>
+    </Card>
   );
 };
 

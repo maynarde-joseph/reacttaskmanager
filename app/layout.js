@@ -3,8 +3,11 @@ import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { AuthProvider } from "./Providers";
-
-config.autoAddCss = false;
+import { Theme, ThemePanel } from "@radix-ui/themes";
+import "@radix-ui/themes/styles.css";
+import Nav from "./(components)/Nav";
+import NavWrap from "./(components)/NavWrap";
+// config.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +21,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          {/* HTML error is from them */}
+          {/* <Theme appearance="dark"> */}
+          <NavWrap>{children}</NavWrap>
+          {/* <ThemePanel /> */}
+          {/* </Theme> */}
+        </AuthProvider>
       </body>
     </html>
   );

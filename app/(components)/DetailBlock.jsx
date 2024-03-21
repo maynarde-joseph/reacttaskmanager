@@ -124,10 +124,7 @@ const DetailBlock = ({ id }) => {
 
   return (
     <div onClick={showPopupForm}>
-      <FontAwesomeIcon
-        icon={faCircleInfo}
-        className=" text-red-400 hover:cursor-pointer hover:text-red-200 pt-1.5"
-      />
+      <FontAwesomeIcon icon={faCircleInfo} className="pt-1.5" />
     </div>
   );
 };

@@ -1,127 +1,126 @@
+"use client";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import {
-  faBolt,
-  faCartPlus,
-  faClock,
-  faCloudMoon,
-  faGear,
-  faMoneyBillTrendUp,
-  faRankingStar,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SignOut from "./SignOut";
+  MoonIcon,
+  GearIcon,
+  ClockIcon,
+  ExitIcon,
+  HomeIcon,
+  Crosshair2Icon,
+  RocketIcon,
+  BarChartIcon,
+} from "@radix-ui/react-icons";
+import { usePathname } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import NameTag from "./NameTag";
-
+// add hidden sm:block to hide on phone
 const Nav = () => {
+  let { data: session } = useSession();
+  let pathname = usePathname();
+
+  if (pathname === "/") {
+    return null;
+  }
+  if (pathname === "/register") {
+    return null;
+  }
+
   return (
-    <div className="bg-cover bg-left bg-hero-pattern1 text-white left-0 top-0 bottom-0 p-4 hidden sm:block rounded-xl m-1.5">
-      <div className="flex items-center mb-4">
-        <div className="pr-1">
-          <FontAwesomeIcon
-            icon={faCloudMoon}
-            size="2xl"
-            className="text-red-400"
-          />
+    <div className="bg-cover bg-left bg-hero-pattern1 left-0 top-0 bottom-0 p-4 flex flex-col border-r-2">
+      <div className="link-7 mt-4">
+        <Link href="/dashboard" className="pr-1 flex items-center">
+          <MoonIcon width="30" height="30" transform="scale(-1,1)" />
+          <h1 className="text-7 font-bold">CRESCENTBYTE</h1>
+        </Link>
+        <hr className="mt-2 mb-20" />
+      </div>
+      <div className="flex-grow">
+        <div className="link-1">
+          <div>
+            <Link
+              href="/dashboard"
+              className="py-2 pl-4 rounded flex items-center"
+            >
+              <HomeIcon width={24} height={24} />
+              <div className="mb-1 ml-6 text-6">Dashboard</div>
+            </Link>
+          </div>
         </div>
-        <h1 className="text-2xl font-bold">CrescentByte</h1>
+        <div className="link-1">
+          <div>
+            <Link
+              href="/dashboard"
+              className="py-2 pl-4 rounded flex items-center"
+            >
+              <BarChartIcon width={24} height={24} />
+              <div className="mb-1 ml-6 text-6">Analytics</div>
+            </Link>
+          </div>
+        </div>
+        <div className="link-1">
+          <div>
+            <Link
+              href="/dashboard"
+              className="py-2 pl-4 rounded flex items-center"
+            >
+              <ClockIcon width={24} height={24} />
+              <div className="mb-1 ml-6 text-6">History</div>
+            </Link>
+          </div>
+        </div>
+        <div className="link-1">
+          <div>
+            <Link
+              href="/dashboard"
+              className="py-2 pl-4 rounded flex items-center"
+            >
+              <Crosshair2Icon width={24} height={24} />
+              <div className="mb-1 ml-6 text-6">Ranking</div>
+            </Link>
+          </div>
+        </div>
+        <div className="link-1">
+          <div>
+            <Link
+              href="/dashboard"
+              className="py-2 pl-4 rounded flex items-center"
+            >
+              <RocketIcon width={24} height={24} />
+              <div className="mb-1 ml-6 text-6">Recharge</div>
+            </Link>
+          </div>
+        </div>
+        <div className="link-1">
+          <div>
+            <Link
+              href="/dashboard"
+              className="py-2 pl-4 rounded flex items-center"
+            >
+              <GearIcon width={24} height={24} />
+              <div className="mb-1 ml-6 text-6">Settings</div>
+            </Link>
+          </div>
+        </div>
+        <div className="link-1" onClick={() => signOut()}>
+          <div>
+            <Link href="/" className="py-2 pl-4 rounded flex items-center">
+              <ExitIcon width={24} height={24} />
+              <div className="mb-1 ml-6 text-6">Sign Out</div>
+            </Link>
+          </div>
+        </div>
       </div>
       <NameTag />
-      <nav className="bg-nav p-4">
-        <ul className="space-y-2">
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Stocks</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faMoneyBillTrendUp}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">History</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faClock}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Ranking</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faRankingStar}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Recharge</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faBolt}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Subscribe</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faCartPlus}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Settings</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faGear}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <SignOut />
-        </ul>
-      </nav>
     </div>
   );
 };

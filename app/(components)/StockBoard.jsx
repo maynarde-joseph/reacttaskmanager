@@ -33,7 +33,6 @@ const StockBoard = () => {
   useEffect(() => {
     const fetchStockData = async () => {
       const promises = allStocks?.map((stock) => getCurrData(stock));
-      // add check to make sure is array
       if (Array.isArray(promises)) {
         const data = await Promise.all(promises);
         setStockData(data);
@@ -47,12 +46,11 @@ const StockBoard = () => {
     <div className="p-5">
       <div className="flex flex-col pl-2">
         <div className="flex flex-row gap-4">
-          <h3 className="text-white">Your stocks</h3>
-          <NewTask />
+          <h3 className="text-2xl">Your Watchlist</h3>
           <SearchBar />
         </div>
       </div>
-      <div className="lg:grid grid-cols-2 xl:grid-cols-4">
+      <div className="lg:grid grid-cols-2 xl:grid-cols-4 mt-4">
         {stockData.map((ticket, index) => (
           <TicketCard id={index} key={index} ticket={ticket} />
         ))}

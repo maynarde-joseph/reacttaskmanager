@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { faMagnifyingGlassDollar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -43,12 +42,8 @@ function SearchBar() {
   };
 
   return (
-    <div onClick={showSwal}>
-      <FontAwesomeIcon
-        icon={faMagnifyingGlassDollar}
-        size="2x"
-        className="text-white hover:cursor-pointer hover:text-red-200"
-      />
+    <div onClick={showSwal} className="hover:cursor-pointer pb-1">
+      <MagnifyingGlassIcon width={32} height={32} />
     </div>
   );
 }

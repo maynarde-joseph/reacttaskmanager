@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
-
-First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Whats Done and What to Do?
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Whats done:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Authentication has been setup with custom credentials (linked to mongoDB)
+- I have moved current price to app/api so it can be used as API (use as ref for others)
+- The LargestChange component (document icon) allows you to "buy stock" (fully functioning)
+- Auto directed to / (signup) if you have an existing session you are directed to /dashboard
+- The model for User is in app/(models)/User.js
 
-## Learn More
+TODO:
 
-To learn more about Next.js, take a look at the following resources:
+- Need to rename components, I wrote this stuff but im still confused
+- Create API routes for all other lambda's (use current price as example)
+- I think we need CI/CD? If we deploy to vercel I think its auto handled
+- Redesign LoginForm and RegisterForm (both were copied from example on github)
+- Make more visually appealing (just ideas are good)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## To consider
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Waiting for opinions:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Should we use prisma? Works with mongoDB
+- Should we use custom credentials or google auth? Its troublesome to integrate both

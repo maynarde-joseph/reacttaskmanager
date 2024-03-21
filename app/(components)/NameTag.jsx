@@ -1,19 +1,34 @@
 "use client";
 import React from "react";
 import { useSession } from "next-auth/react";
-import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const NameTag = () => {
   const { data: session } = useSession();
   return (
-    <div className="bg-nav p-4 mb-4 flex flex-row gap-4 rounded hover:bg-gray-800 py-2 px-4">
-      <FontAwesomeIcon
-        icon={faAddressCard}
-        size="lg"
-        className=" text-white hover:cursor-pointer hover:text-red-200 mt-1.5"
-      />
-      <div className="mt-1">{session?.user?.name}</div>
+    <div className="rounded-md">
+      <Link href="/dashboard" className="">
+        <Card>
+          <CardContent className="flex items-center px-4 pt-2 pb-2">
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <div className="ml-4">
+              <CardTitle className="username">{session?.user?.name}</CardTitle>
+              <CardDescription>Balance: $100</CardDescription>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
     </div>
   );
 };
