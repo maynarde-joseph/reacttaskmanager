@@ -14,15 +14,8 @@ import {
   BarChartIcon,
 } from "@radix-ui/react-icons";
 import { usePathname } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import NameTag from "./NameTag";
+import { ModeToggle } from "./ThemeToggle";
 // add hidden sm:block to hide on phone
 const Nav = () => {
   let { data: session } = useSession();
@@ -36,13 +29,13 @@ const Nav = () => {
   }
 
   return (
-    <div className="bg-cover bg-left bg-hero-pattern1 left-0 top-0 bottom-0 p-4 flex flex-col border-r-2">
+    <div className="bg-cover bg-left bg-hero-pattern1 left-0 top-0 bottom-0 p-2 flex flex-col border-r-2">
       <div className="link-7 mt-4">
         <Link href="/dashboard" className="pr-1 flex items-center">
           <MoonIcon width="30" height="30" transform="scale(-1,1)" />
           <h1 className="text-7 font-bold">CRESCENTBYTE</h1>
         </Link>
-        <hr className="mt-2 mb-20" />
+        <hr className="mt-2 mb-16" />
       </div>
       <div className="flex-grow">
         <div className="link-1">
@@ -119,6 +112,10 @@ const Nav = () => {
             </Link>
           </div>
         </div>
+      </div>
+      <div className="pl-2 pb-2 flex flex-row">
+        <ModeToggle />
+        <div className="text-6 pt-2 pl-1">Toggle Theme</div>
       </div>
       <NameTag />
     </div>

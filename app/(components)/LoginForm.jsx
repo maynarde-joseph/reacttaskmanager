@@ -49,8 +49,15 @@ export default function LoginForm() {
             </div>
           </div>
           <div className="p-7 rt-r-position-absolute bottom-0">
-            CrescentByte “This stock investment simulator has saved me time and
-            money, helping me get a foothold into the stock game!” Bobby Lee
+            Disclaimer, due to limited API access(financial restraints) time
+            restraints our app can only preform centain features of a real stock
+            market. Our current service is only able to access lowest ask and
+            highest bid which impacts namely the BUY and SELL trade
+            functionality. In the future with more funding we will add level 2
+            stock features to our site like live stock book. We make
+            calculations off limited data to help make estimated trades. We do
+            not have the Order Queuing and Partial Fills functionality. We also
+            have changed settlement time to 10 min to allow for quick trading.
           </div>
         </div>
         <div className="rounded-r-3xl flex border-2 bg-zinc-900">

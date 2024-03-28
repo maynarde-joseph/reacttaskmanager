@@ -3,7 +3,7 @@ import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { AuthProvider } from "./Providers";
-import { Theme, ThemePanel } from "@radix-ui/themes";
+import { ThemeProvider } from "./(components)/theme-provider";
 import "@radix-ui/themes/styles.css";
 import Nav from "./(components)/Nav";
 import NavWrap from "./(components)/NavWrap";
@@ -23,10 +23,14 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <AuthProvider>
           {/* HTML error is from them */}
-          {/* <Theme appearance="dark"> */}
-          <NavWrap>{children}</NavWrap>
-          {/* <ThemePanel /> */}
-          {/* </Theme> */}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <NavWrap>{children}</NavWrap>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

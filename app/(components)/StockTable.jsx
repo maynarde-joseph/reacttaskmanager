@@ -35,9 +35,15 @@ const getCurrData = async (stockSymbol) => {
   }
 };
 
-const StockTable = () => {
+const StockTable = ({ mainStock }) => {
   const [stockData, setStockData] = useState([]);
   const { data: session, status, update } = useSession();
+  const setSelectedStock = mainStock;
+
+  const handleStockClick = (stockName) => {
+    setSelectedStock(stockName);
+    console.log("CHANGED");
+  };
 
   let allStocks = session?.user?.stocks;
 
@@ -54,16 +60,18 @@ const StockTable = () => {
   }, [allStocks]);
 
   return (
-    <div className="p-2">
+    <div className="p-2 border-t-2">
       <div className="">
-        <div className="flex flex-row gap-2 items-center">
-          <h3 className="pl-3 pb-2 text-xl">Your Watchlist:</h3>
-          <SearchBar />
+        <div className="flex flex-row items-center justify-between">
+          <h3 className="pl-3 pb-1 text-lg">Your Watchlist:</h3>
+          <div className="pr-2">
+            <SearchBar />
+          </div>
         </div>
         <hr className="mt-2 mb-5" />
 
         <Table>
-          <TableCaption>Your Watchlist</TableCaption>
+          <TableCaption>The End</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Stock Name</TableHead>
@@ -72,7 +80,11 @@ const StockTable = () => {
           </TableHeader>
           <TableBody>
             {stockData.map((ticket, index) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                onClick={() => handleStockClick(ticket.stock_name)}
+                className="cursor-pointer"
+              >
                 <TableCell>{ticket.stock_name}</TableCell>
                 <TableCell>{ticket.current_price}</TableCell>
                 <TableCell>

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { faFileWaveform } from "@fortawesome/free-solid-svg-icons";
+import { faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -52,7 +52,7 @@ const LargestChange = ({ id, valueX }) => {
 
   return (
     <div onClick={investTicket}>
-      <FontAwesomeIcon icon={faFileWaveform} className="pt-1.5" />
+      <FontAwesomeIcon icon={faMoneyBillTransfer} className="pt-1.5" />
     </div>
   );
 };

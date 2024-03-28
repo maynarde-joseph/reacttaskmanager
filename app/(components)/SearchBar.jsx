@@ -5,6 +5,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useSession } from "next-auth/react";
+import { PlusIcon } from "lucide-react";
 
 function SearchBar() {
   const [inputValue, setInputValue] = useState("");
@@ -43,7 +44,7 @@ function SearchBar() {
 
   return (
     <div onClick={showSwal} className="hover:cursor-pointer pb-1">
-      <MagnifyingGlassIcon width={32} height={32} />
+      <PlusIcon width={28} height={28} />
     </div>
   );
 }

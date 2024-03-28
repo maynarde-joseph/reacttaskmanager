@@ -5,10 +5,11 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { faCoins } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const NameTag = () => {
@@ -24,7 +25,14 @@ const NameTag = () => {
             </Avatar>
             <div className="ml-4">
               <CardTitle className="username">{session?.user?.name}</CardTitle>
-              <CardDescription>Balance: $100</CardDescription>
+              <CardDescription>
+                <FontAwesomeIcon
+                  icon={faCoins}
+                  size="sm"
+                  className="text-white hover:cursor-pointer hover:text-red-200"
+                />
+                {" 234,231,239"}
+              </CardDescription>
             </div>
           </CardContent>
         </Card>
