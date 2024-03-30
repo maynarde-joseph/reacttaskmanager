@@ -21,20 +21,46 @@ function SearchBar() {
         setInputValue(inputValue);
 
         const response = await fetch(
-          `../api/latest?symbol=${encodeURIComponent(inputValue)}`
+          `api/info?symbol=${encodeURIComponent(inputValue)}`
         );
 
         if (response.ok) {
           const { data } = await response.json();
-          const bodyValue = data.body;
+          const bodyValue = JSON.parse(data.body);
           const stockInfo = {
-            stock_name: inputValue,
-            current_price: bodyValue,
+            symbol: bodyValue.symbol,
+            longName: bodyValue.longName,
+            bid: bodyValue.bid,
+            bidSize: bodyValue.bidSize,
+            ask: bodyValue.ask,
+            askSize: bodyValue.askSize,
+            regularMarketPrice: bodyValue.currentPrice,
+            regularMarketDayHigh: bodyValue.regularMarketDayHigh,
+            regularMarketDayLow: bodyValue.regularMarketDayLow,
+            regularMarketVolume: bodyValue.regularMarketVolume,
+            marketCap: bodyValue.marketCap,
+            fiftyTwoWeekHigh: bodyValue.fiftyTwoWeekHigh,
+            fiftyTwoWeekLow: bodyValue.fiftyTwoWeekLow,
+            industry: bodyValue.industry,
+            sector: bodyValue.sector,
+            averageVolume10days: bodyValue.averageVolume10days,
+            beta: bodyValue.beta,
+            floatShares: bodyValue.floatShares,
+            priceToBook: bodyValue.priceToBook,
+            exchange: bodyValue.exchange,
           };
           // setTickets((prevTickets) => [...prevTickets, stockInfo]);
-          let tempStocks = session?.user.stocks;
-          tempStocks.push(stockInfo.stock_name);
-          update({ stocks: tempStocks });
+          if (stockInfo.exchange == "NMS") {
+            let tempStocks = session?.user.stocks;
+            if (!tempStocks.includes(stockInfo.symbol)) {
+              tempStocks.push(stockInfo.symbol);
+              update({ stocks: tempStocks });
+            } else {
+              console.error("Already in watched");
+            }
+          } else {
+            console.error("Not a Nasqad stock");
+          }
         } else {
           console.error("Error:", response.status);
         }

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { faThumbTack } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Dialog,
@@ -39,7 +39,7 @@ const PinBlock = ({ id }) => {
   return (
     <>
       <div onClick={investTicket}>
-        <FontAwesomeIcon icon={faThumbTack} className="pt-1.5" />
+        <FontAwesomeIcon icon={faCircleInfo} className="pt-1.5" />
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>

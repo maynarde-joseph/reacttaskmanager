@@ -1,5 +1,7 @@
 "use client";
-// TradingViewWidget.jsx
+// The error we get is widget checks for the existance of <div className="tradingview-widget-copyright"></div>
+// Our useEffect removes all divs from it resulting in the error
+// If anyone finds a way to keep it then nice if not gg the error doesnt actually impact anything
 
 import React, { useEffect, useRef, memo } from "react";
 
@@ -38,12 +40,7 @@ function TradingViewWidget({ mainStock }) {
       className="tradingview-widget-container m-1 mt-0 ml-0"
       ref={container}
       style={{ height: "100%", width: "100%" }}
-    >
-      <div
-        className="tradingview-widget-container__widget"
-        style={{ height: "100%", width: "100%" }}
-      ></div>
-    </div>
+    ></div>
   );
 }
 

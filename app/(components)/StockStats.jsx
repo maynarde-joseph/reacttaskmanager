@@ -1,43 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import MiniGraph from "./MiniGraph";
-
-const getCurrData = async (stockSymbol) => {
-  const response = await fetch(
-    `api/info?symbol=${encodeURIComponent(stockSymbol)}`
-  );
-  if (response.ok) {
-    const { data } = await response.json();
-    const bodyValue = JSON.parse(data.body);
-    const stockInfo = {
-      symbol: bodyValue.symbol,
-      longName: bodyValue.longName,
-      bid: bodyValue.bid,
-      bidSize: bodyValue.bidSize,
-      ask: bodyValue.ask,
-      askSize: bodyValue.askSize,
-      regularMarketPrice: bodyValue.currentPrice,
-      regularMarketDayHigh: bodyValue.regularMarketDayHigh,
-      regularMarketDayLow: bodyValue.regularMarketDayLow,
-      regularMarketVolume: bodyValue.regularMarketVolume,
-      marketCap: bodyValue.marketCap,
-      fiftyTwoWeekHigh: bodyValue.fiftyTwoWeekHigh,
-      fiftyTwoWeekLow: bodyValue.fiftyTwoWeekLow,
-      industry: bodyValue.industry,
-      sector: bodyValue.sector,
-    };
-    return stockInfo;
-  } else {
-    console.error("Error:", response.status);
-  }
-};
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Receipt } from "lucide-react";
+import { faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const getMarketStatus = async () => {
   const response = await fetch(`api/status`);
   if (response.ok) {
     const { data } = await response.json();
-    const bodyValue = JSON.parse(data.body);
-    return bodyValue;
+    return data;
   } else {
     console.error("Error:", response.status);
   }
@@ -46,66 +27,151 @@ const getMarketStatus = async () => {
 export const StockStats = ({ mainStock }) => {
   const [stockData, setStockData] = useState(null);
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getCurrData(mainStock);
-      // const marketStatus = await getMarketStatus();
-      // console.log(marketStatus);
-      setStockData(data);
-    };
-
-    fetchData();
+    setStockData(mainStock);
   }, [mainStock]);
 
+  const formatLargeNumber = (number) => {
+    const trillion = 1e12;
+    const billion = 1e9;
+    const million = 1e6;
+
+    if (number >= trillion) {
+      return `$${(number / trillion).toFixed(1)}T`;
+    } else if (number >= billion) {
+      return `$${(number / billion).toFixed(1)}B`;
+    } else if (number >= million) {
+      return `$${(number / million).toFixed(1)}M`;
+    } else {
+      return number.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
+    }
+  };
+
   return (
-    <div className="flex flex-col justify-between gap-4 p-5">
+    <div className="p-4 pt-3">
       {stockData ? (
-        <div className="flex flex-row gap-3">
-          <div className="flex-grow">
-            <h1 className="">
-              {stockData.symbol}({stockData.longName})
-            </h1>
-            <p className="font-semibold text-4xl">
-              {stockData.regularMarketPrice}
-            </p>
-            <p className="">
-              {stockData.industry} - {stockData.sector}
-            </p>
-          </div>
-          <div className="flex gap-2 pr-48 py-1">
-            <div>
-              <div>
-                <p className="font-semibold">Bid: {stockData.bid}</p>
-              </div>
-              <div>
-                <p className="font-semibold">Bid Size: {stockData.bidSize}</p>
-              </div>
+        <Card className="overflow-hidden">
+          <CardHeader className="flex flex-row items-start bg-muted/50">
+            <div className="grid gap-0.5">
+              <CardTitle className="text-lg">
+                {stockData.symbol} ({stockData.longName})
+              </CardTitle>
+              <CardDescription>{stockData.industry}</CardDescription>
             </div>
-            <div>
-              <div>
-                <p className="font-semibold">Ask: {stockData.ask}</p>
-              </div>
-              <div>
-                <p className="font-semibold">Ask Size: {stockData.askSize}</p>
-              </div>
+          </CardHeader>
+          <CardContent className="p-6 text-sm">
+            <div className="grid gap-3">
+              <div className="font-semibold">Latest Bid/Ask</div>
+              <ul className="grid gap-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Bid</span>
+                  <span>
+                    {(stockData.bid || 0).toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Bid Amount</span>
+                  <span>{stockData.bidSize || 0}</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Ask</span>
+                  <span>
+                    {(stockData.ask || 0).toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Ask Amount</span>
+                  <span>{stockData.askSize || 0}</span>
+                </li>
+              </ul>
+              <Separator className="my-2" />
+              <div className="font-semibold">Range</div>
+              <ul className="grid gap-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Day</span>
+                  <span>
+                    {stockData.regularMarketDayLow.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}{" "}
+                    -{" "}
+                    {stockData.regularMarketDayHigh.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">52W</span>
+                  <span>
+                    {stockData.fiftyTwoWeekLow.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}{" "}
+                    -{" "}
+                    {stockData.fiftyTwoWeekHigh.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </li>
+              </ul>
+              <Separator className="my-2" />
+              <div className="font-semibold">Key Stats</div>
+              <ul className="grid gap-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Volume</span>
+                  <span>
+                    {formatLargeNumber(stockData.regularMarketVolume)}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">
+                    Avg Volume (10W)
+                  </span>
+                  <span>
+                    {formatLargeNumber(stockData.averageVolume10days)}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Market Cap</span>
+                  <span>{formatLargeNumber(stockData.marketCap)}</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Price to Book</span>
+                  <span>
+                    {stockData.priceToBook.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </li>
+              </ul>
             </div>
-            <div>
-              <p className="font-semibold">
-                Days RANGE: {stockData.regularMarketDayLow} -{" "}
-                {stockData.regularMarketDayHigh}
-              </p>
-              <p className="font-semibold">
-                52WKs RANGE: {stockData.fiftyTwoWeekLow} -{" "}
-                {stockData.fiftyTwoWeekHigh}
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold">
-                Volume: {stockData.regularMarketVolume}
-              </p>
-              <p className="font-semibold">Market Cap: {stockData.marketCap}</p>
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       ) : (
         <div>Loading...</div>
       )}

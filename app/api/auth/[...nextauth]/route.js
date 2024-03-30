@@ -81,6 +81,7 @@ export const authOptions = {
           id: user.id,
           stocks: user.watched_stocks,
           curr_inv: user.curr_investments,
+          balance: user.balance.total,
         };
       }
 
@@ -94,6 +95,7 @@ export const authOptions = {
           id: token.id,
           stocks: token.stocks,
           curr_inv: token.curr_inv,
+          balance: token.balance,
         },
       };
     },
