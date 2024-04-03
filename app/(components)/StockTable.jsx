@@ -6,14 +6,12 @@ import { useSession } from "next-auth/react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import DeleteBlock from "./DeleteBlock";
-import LargestChange from "./LargestChange";
 import DetailBlock from "./DetailBlock";
 import {
   Card,
@@ -24,10 +22,19 @@ import {
 } from "@/components/ui/card";
 // might want to use useMemo to ensure some things dont get rerendered.
 // looking into how to improve code style here
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { MarketToggle } from "./MarketToggle";
 
 const getCurrData = async (stockSymbol) => {
+  let tempName = stockSymbol;
+  if (stockSymbol.split(":")[0] == "ASX") {
+    tempName = stockSymbol.split(":")[1];
+    tempName = `${tempName}.AX`;
+  } else {
+    tempName = stockSymbol.split(":")[1];
+  }
   const response = await fetch(
-    `api/info?symbol=${encodeURIComponent(stockSymbol)}`
+    `api/info?symbol=${encodeURIComponent(tempName)}`
   );
   if (response.ok) {
     const { data } = await response.json();
@@ -54,7 +61,20 @@ const getCurrData = async (stockSymbol) => {
         floatShares: bodyValue.floatShares,
         priceToBook: bodyValue.priceToBook,
         exchange: bodyValue.exchange,
+        dividendRate: bodyValue.dividendRate,
+        dividendYield: bodyValue.dividendYield,
+        payoutRatio: bodyValue.payoutRatio,
+        longBusinessSummary: bodyValue.longBusinessSummary,
       };
+      if (stockInfo.exchange === "NMS") {
+        let tempStockSymbol = `NASDAQ:${stockInfo.symbol}`;
+        stockInfo.symbolLong = tempStockSymbol;
+      } else if (stockInfo.exchange === "ASX") {
+        let tempStockSymbol = `ASX:${stockInfo.symbol.split(".")[0]}`;
+        stockInfo.symbolLong = tempStockSymbol;
+      } else {
+        console.log("HOW?");
+      }
       return stockInfo;
     }
   } else {
@@ -63,6 +83,7 @@ const getCurrData = async (stockSymbol) => {
 };
 
 const StockTable = ({ mainStock }) => {
+  const [selectedMarket, setSelectedMarket] = useState("NMS");
   const [stockData, setStockData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -86,9 +107,12 @@ const StockTable = ({ mainStock }) => {
         if (Array.isArray(promises)) {
           const data = await Promise.all(promises);
           const filteredData = data.filter((item) => item !== undefined);
-          setStockData(filteredData);
-          if (filteredData.length > 0) {
-            setSelectedStock(filteredData[0]);
+          const marketFilteredData = filteredData.filter(
+            (item) => item.exchange === selectedMarket
+          );
+          setStockData(marketFilteredData);
+          if (marketFilteredData.length > 0) {
+            setSelectedStock(marketFilteredData[0]);
           }
         }
       } catch (error) {
@@ -99,22 +123,24 @@ const StockTable = ({ mainStock }) => {
     };
 
     fetchStockData();
-  }, [allStocks, setSelectedStock]);
+  }, [allStocks, setSelectedStock, selectedMarket]);
 
   return (
-    <div className="py-2">
+    <div className="">
       <Card>
         <CardHeader className="px-7">
           <div className="flex flex-row items-center justify-between">
             <CardTitle>Your Watchlist</CardTitle>
-            <div className="pr-2">
-              <SearchBar />
-            </div>
+            <MarketToggle
+              selectedMarket={selectedMarket}
+              setSelectedMarket={setSelectedMarket}
+            />
+            <SearchBar />
           </div>
           <CardDescription>Stocks you are currently watching.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="overflow-y-auto max-h-52">
+          <ScrollArea className="h-56">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -128,7 +154,7 @@ const StockTable = ({ mainStock }) => {
                   </TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="overflow-y-scroll h-1/12">
+              <TableBody>
                 {loading ? (
                   <TableRow>
                     <TableCell colSpan={5}>Loading...</TableCell>
@@ -169,7 +195,7 @@ const StockTable = ({ mainStock }) => {
                 )}
               </TableBody>
             </Table>
-          </div>
+          </ScrollArea>
         </CardContent>
       </Card>
     </div>

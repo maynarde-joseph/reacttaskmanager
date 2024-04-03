@@ -1,28 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
-import { Receipt } from "lucide-react";
-import { faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-const getMarketStatus = async () => {
-  const response = await fetch(`api/status`);
-  if (response.ok) {
-    const { data } = await response.json();
-    return data;
-  } else {
-    console.error("Error:", response.status);
-  }
-};
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const StockStats = ({ mainStock }) => {
   const [stockData, setStockData] = useState(null);
@@ -50,13 +36,19 @@ export const StockStats = ({ mainStock }) => {
   };
 
   return (
-    <div className="p-4 pt-3">
+    <div className="p-4 pt-0 pr-0 overflow-scroll">
       {stockData ? (
-        <Card className="overflow-hidden">
+        <Card className="">
           <CardHeader className="flex flex-row items-start bg-muted/50">
             <div className="grid gap-0.5">
-              <CardTitle className="text-lg">
-                {stockData.symbol} ({stockData.longName})
+              <CardTitle className="text-lg">{stockData.symbol}</CardTitle>
+              <CardTitle>
+                {stockData.regularMarketPrice.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </CardTitle>
               <CardDescription>{stockData.industry}</CardDescription>
             </div>
@@ -137,43 +129,88 @@ export const StockStats = ({ mainStock }) => {
                 </li>
               </ul>
               <Separator className="my-2" />
-              <div className="font-semibold">Key Stats</div>
-              <ul className="grid gap-3">
-                <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Volume</span>
-                  <span>
-                    {formatLargeNumber(stockData.regularMarketVolume)}
-                  </span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">
-                    Avg Volume (10W)
-                  </span>
-                  <span>
-                    {formatLargeNumber(stockData.averageVolume10days)}
-                  </span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Market Cap</span>
-                  <span>{formatLargeNumber(stockData.marketCap)}</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Price to Book</span>
-                  <span>
-                    {stockData.priceToBook.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </span>
-                </li>
-              </ul>
+              <div className="font-semibold">Key Statistics</div>
+              <ScrollArea className="h-36">
+                <ul className="grid gap-3 pt-1">
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Volume</span>
+                    <span>
+                      {formatLargeNumber(stockData.regularMarketVolume)}
+                    </span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">
+                      Avg Volume (10W)
+                    </span>
+                    <span>
+                      {formatLargeNumber(stockData.averageVolume10days)}
+                    </span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Market Cap</span>
+                    <span>{formatLargeNumber(stockData.marketCap)}</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Price to Book</span>
+                    <span>
+                      {stockData.priceToBook.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">
+                      Dividend Yield
+                    </span>
+                    <span>
+                      {stockData.dividendYield.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 4,
+                        maximumFractionDigits: 4,
+                      }) || "N/A"}
+                    </span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Dividend Rate</span>
+                    <span>
+                      {stockData.dividendRate.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 4,
+                        maximumFractionDigits: 4,
+                      }) || "N/A"}
+                    </span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Payout Ratio</span>
+                    <span>
+                      {stockData.payoutRatio.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 4,
+                        maximumFractionDigits: 4,
+                      }) || "N/A"}
+                    </span>
+                  </li>
+                </ul>
+              </ScrollArea>
             </div>
           </CardContent>
         </Card>
       ) : (
-        <div>Loading...</div>
+        <Card className="overflow-hidden">
+          <CardHeader className="flex flex-row items-start bg-muted/50">
+            <div className="grid gap-0.5">
+              <CardTitle className="text-lg">Loading</CardTitle>
+              <CardDescription>Loading</CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent className="p-6 text-sm"></CardContent>
+        </Card>
       )}
     </div>
   );

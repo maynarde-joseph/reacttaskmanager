@@ -40,7 +40,7 @@ export default function LoginForm() {
 
   return (
     <div className="flex h-screen w-screen">
-      <div className="flex-grow my-20 mx-32 grid grid-cols-2">
+      <div className="flex-grow my-20 mr-32 grid grid-cols-2">
         <div className="rounded-l-3xl rt-r-position-relative border-2">
           <div className="mt-4">
             <div className="p-7 flex items-center">
@@ -58,6 +58,7 @@ export default function LoginForm() {
             calculations off limited data to help make estimated trades. We do
             not have the Order Queuing and Partial Fills functionality. We also
             have changed settlement time to 10 min to allow for quick trading.
+            But you cannot trade the same stock more than once every 30 min.
           </div>
         </div>
         <div className="rounded-r-3xl flex border-2 bg-zinc-900">

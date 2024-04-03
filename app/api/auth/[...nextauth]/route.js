@@ -43,6 +43,22 @@ export const authOptions = {
   },
   callbacks: {
     async jwt({ session, token, user, trigger }) {
+      if (trigger === "update" && session?.achievements) {
+        token.achievements = session.achievements;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { achievements: token.achievements },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
       if (trigger === "update" && session?.stocks) {
         token.stocks = session.stocks;
 
@@ -75,13 +91,167 @@ export const authOptions = {
         }
       }
 
+      if (trigger === "update" && session?.prev_inv) {
+        token.prev_inv = session.prev_inv;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { prev_investments: token.prev_inv },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
+      if (trigger === "update" && session?.pend_inv) {
+        token.pend_inv = session.pend_inv;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { pending_investments: token.pend_inv },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
+      if (trigger === "update" && session?.experience) {
+        token.experience = session.experience;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { experience: token.experience },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
+      if (trigger === "update" && session?.opt_in) {
+        token.opt_in = session.opt_in;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { opt_in: token.opt_in },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
+      if (trigger === "update" && session?.balance) {
+        token.balance = session.balance;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { balance: token.balance },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
+      if (trigger === "update" && session?.level) {
+        token.level = session.level;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { level: token.level },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
+      if (trigger === "update" && session?.avatar) {
+        token.avatar = session.avatar;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { avatar: token.avatar },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
+      if (trigger === "update" && session?.border) {
+        token.border = session.border;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { border: token.border },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
+      if (trigger === "update" && session?.displayBadge) {
+        token.displayBadge = session.displayBadge;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { displayBadge: token.displayBadge },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
       if (user) {
         return {
           ...token,
           id: user.id,
           stocks: user.watched_stocks,
+          experience: user.experience,
+          achievements: user.achievements,
+          first_login: user.first_login,
+          pend_inv: user.pending_investments,
           curr_inv: user.curr_investments,
-          balance: user.balance.total,
+          prev_inv: user.prev_investments,
+          balance: user.balance,
+          level: user.level,
+          avatar: user.avatar,
+          border: user.border,
+          opt_in: user.opt_in,
+          displayBadge: user.displayBadge,
         };
       }
 
@@ -96,6 +266,16 @@ export const authOptions = {
           stocks: token.stocks,
           curr_inv: token.curr_inv,
           balance: token.balance,
+          experience: token.experience,
+          achievements: token.achievements,
+          first_login: token.first_login,
+          pend_inv: token.pend_inv,
+          prev_inv: token.prev_inv,
+          level: token.level,
+          avatar: token.avatar,
+          border: token.border,
+          opt_in: token.opt_in,
+          displayBadge: token.displayBadge,
         },
       };
     },

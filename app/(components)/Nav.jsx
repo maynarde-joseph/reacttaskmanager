@@ -1,7 +1,5 @@
 "use client";
-"use client";
 import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import {
@@ -13,19 +11,18 @@ import {
   BarChartIcon,
   ArchiveIcon,
   DashboardIcon,
+  InfoCircledIcon,
 } from "@radix-ui/react-icons";
 import { usePathname } from "next/navigation";
-import NameTag from "./NameTag";
-import { ModeToggle } from "./ThemeToggle";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Layers, LayersIcon } from "lucide-react";
 
 const Nav = () => {
-  let { data: session } = useSession();
   let pathname = usePathname();
 
   if (pathname === "/") {
@@ -35,6 +32,10 @@ const Nav = () => {
   if (pathname === "/register") {
     return null;
   }
+
+  const isActive = (href) => {
+    return pathname === href;
+  };
 
   return (
     <TooltipProvider>
@@ -51,7 +52,11 @@ const Nav = () => {
             <TooltipTrigger asChild>
               <Link
                 href="/dashboard"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/dashboard")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 <DashboardIcon width={24} height={24} />
                 <span className="sr-only">Dashboard</span>
@@ -63,7 +68,11 @@ const Nav = () => {
             <TooltipTrigger asChild>
               <Link
                 href="/analytics"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/analytics")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 <BarChartIcon width={24} height={24} />
                 <span className="sr-only">Analytics</span>
@@ -75,7 +84,11 @@ const Nav = () => {
             <TooltipTrigger asChild>
               <Link
                 href="/portfolio"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/portfolio")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 <ArchiveIcon width={24} height={24} />
                 <span className="sr-only">Portfolio</span>
@@ -86,8 +99,12 @@ const Nav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="/ranking"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                href="/achievements"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/achievements")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 <Crosshair2Icon width={24} height={24} />
                 <span className="sr-only">Ranking</span>
@@ -98,8 +115,28 @@ const Nav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
+                href="/ranking"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/ranking")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <LayersIcon width={24} height={24} />
+                <span className="sr-only">Achievements</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Achievements</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
                 href="/subscription"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/subscription")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 <RocketIcon width={24} height={24} />
                 <span className="sr-only">Subscription</span>
@@ -110,14 +147,18 @@ const Nav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="/dashboard"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                href="/info"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/info")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
-                <GearIcon width={24} height={24} />
-                <span className="sr-only">Settings</span>
+                <InfoCircledIcon width={24} height={24} />
+                <span className="sr-only">Infomation</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Settings</TooltipContent>
+            <TooltipContent side="right">Infomation</TooltipContent>
           </Tooltip>
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">

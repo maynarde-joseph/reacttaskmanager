@@ -1,3 +1,4 @@
+import { Int32 } from "mongodb";
 import mongoose, { Schema } from "mongoose";
 
 mongoose.connect(process.env.MONGODB_URI);
@@ -8,7 +9,24 @@ const userSchema = new Schema(
     email: String,
     name: String,
     password: String,
+    level: Number,
+    avatar: Number,
+    border: Number,
+    displayBadge: Number,
+    experience: Number,
+    first_login: Boolean,
+    achievements: [Number],
     watched_stocks: [String],
+    pending_investments: [
+      {
+        stock: String,
+        amount: Schema.Types.Decimal128,
+        buy_date: Date,
+        sell_date: Date,
+        stock_value: Schema.Types.Decimal128,
+        currency: String,
+      },
+    ],
     curr_investments: [
       {
         stock: String,
@@ -29,11 +47,8 @@ const userSchema = new Schema(
         currency: String,
       },
     ],
-    balance: {
-      currency: String,
-      total: Number,
-      month: Number,
-    },
+    balance: Number,
+    opt_in: Boolean,
     settings: {
       mode: String,
     },

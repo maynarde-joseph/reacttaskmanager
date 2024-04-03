@@ -5,29 +5,25 @@
 
 import React, { useEffect, useRef, memo } from "react";
 
-function TradingViewWidget({ mainStock }) {
+function TechnicalAnalysis({ mainStock }) {
   const container = useRef();
 
   useEffect(() => {
     const script = document.createElement("script");
-    console.log(mainStock);
     script.src =
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-    script.type = "text/javascript";
+      "https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js";
     script.async = true;
-    script.innerHTML = `
-        {
-          "autosize": true,
-          "symbol": "${mainStock}",
-          "interval": "D",
-          "timezone": "Etc/UTC",
-          "theme": "dark",
-          "style": "1",
-          "locale": "en",
-          "enable_publishing": false,
-          "calendar": false,
-          "support_host": "https://www.tradingview.com"
-        }`;
+    script.innerHTML = `{
+      "interval": "1m",
+      "width": 425,
+      "isTransparent": false,
+      "height": 450,
+      "symbol": "${mainStock}",
+      "showIntervalTabs": true,
+      "displayMode": "single",
+      "locale": "en",
+      "colorTheme": "dark"
+    }`;
     while (container.current.firstChild) {
       container.current.removeChild(container.current.firstChild);
     }
@@ -44,4 +40,4 @@ function TradingViewWidget({ mainStock }) {
   );
 }
 
-export default memo(TradingViewWidget);
+export default memo(TechnicalAnalysis);

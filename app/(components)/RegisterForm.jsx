@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { MoonIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
@@ -68,7 +67,7 @@ export default function RegisterForm() {
 
   return (
     <div className="flex h-screen w-screen">
-      <div className="flex-grow my-20 mx-32 grid grid-cols-2">
+      <div className="flex-grow my-20 mr-32 grid grid-cols-2">
         <div className="rounded-l-3xl rt-r-position-relative border-2">
           <div className="mt-4">
             <div className="p-7 flex items-center">
