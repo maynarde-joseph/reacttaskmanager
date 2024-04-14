@@ -1,143 +1,217 @@
+"use client";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import {
-  faAddressCard,
-  faArrowRightFromBracket,
-  faBolt,
-  faCartPlus,
-  faClock,
-  faCloudMoon,
-  faGear,
-  faMoneyBillTrendUp,
-  faRankingStar,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SignOut from "./SignOut";
+  MoonIcon,
+  ExitIcon,
+  Crosshair2Icon,
+  RocketIcon,
+  BarChartIcon,
+  ArchiveIcon,
+  DashboardIcon,
+  InfoCircledIcon,
+  GlobeIcon,
+} from "@radix-ui/react-icons";
+import { usePathname } from "next/navigation";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { LayersIcon } from "lucide-react";
+import { IoIosGitCompare } from "react-icons/io";
 
 const Nav = () => {
+  let pathname = usePathname();
+
+  if (pathname === "/") {
+    return null;
+  }
+
+  if (pathname === "/register") {
+    return null;
+  }
+
+  const isActive = (href) => {
+    return pathname === href;
+  };
+
   return (
-    <div className="bg-cover bg-left bg-hero-pattern1 text-white left-0 top-0 bottom-0 p-4 hidden sm:block rounded-xl m-1.5">
-      <div className="flex items-center mb-4">
-        {/* <Image
-          src={Logo}
-          width={10}
-          height={10}
-          alt="CrescentByte Logo"
-          className="w-8 h-8 mr-2"
-        /> */}
-        <div className="pr-1">
-          <FontAwesomeIcon
-            icon={faCloudMoon}
-            size="2xl"
-            className="text-red-400"
-          />
-        </div>
-        <h1 className="text-2xl font-bold">CrescentByte</h1>
-      </div>
-      <div className="bg-nav p-4 mb-4 flex flex-row gap-4 rounded hover:bg-gray-800 py-2 px-4">
-        <FontAwesomeIcon
-          icon={faAddressCard}
-          size="lg"
-          className=" text-white hover:cursor-pointer hover:text-red-200 mt-1"
-        />
-        <div className="mt-1">Your Name</div>
-      </div>
-      <nav className="bg-nav p-4">
-        <ul className="space-y-2">
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Stocks</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faMoneyBillTrendUp}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
+    <TooltipProvider>
+      <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+        <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+          <Link
+            href="/dashboard"
+            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+          >
+            <MoonIcon width={24} height={24} transform="scale(-1,1)" />
+            <span className="sr-only">CRESCENTBYTE</span>
+          </Link>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/dashboard"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/dashboard")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <DashboardIcon width={24} height={24} />
+                <span className="sr-only">Dashboard</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Dashboard</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/analytics"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/analytics")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <BarChartIcon width={24} height={24} />
+                <span className="sr-only">Analytics</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Analytics</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/compare"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/compare")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <IoIosGitCompare className="size-7" />
+                <span className="sr-only">Compare</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Compare</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/portfolio"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/portfolio")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <ArchiveIcon width={24} height={24} />
+                <span className="sr-only">Portfolio</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Portfolio</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/achievements"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/achievements")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Crosshair2Icon width={24} height={24} />
+                <span className="sr-only">Achievements</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Achievements</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/ranking"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/ranking")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <LayersIcon width={24} height={24} />
+                <span className="sr-only">Ranking</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Ranking</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/subscription"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/subscription")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <RocketIcon width={24} height={24} />
+                <span className="sr-only">Subscription</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Subscription</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/forums"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/forums")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <GlobeIcon width={24} height={24} />
+                <span className="sr-only">Forums</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Forums</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/info"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/info")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <InfoCircledIcon width={24} height={24} />
+                <span className="sr-only">Infomation</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Infomation</TooltipContent>
+          </Tooltip>
+        </nav>
+        <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div onClick={() => signOut()}>
+                <Link
+                  href="/"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                >
+                  <ExitIcon width={24} height={24} />
+                  <span className="sr-only">Sign Out</span>
+                </Link>
               </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">History</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faClock}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Ranking</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faRankingStar}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Recharge</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faBolt}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Subscribe</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faCartPlus}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <li className="flex flex-row">
-            <Link
-              href="/"
-              className="py-2 px-4 rounded hover:bg-gray-800 flex items-center justify-between w-40"
-            >
-              <div className="">Settings</div>
-              <div>
-                <FontAwesomeIcon
-                  icon={faGear}
-                  size="lg"
-                  className="text-white hover:cursor-pointer hover:text-red-200 pr-1"
-                />
-              </div>
-            </Link>
-          </li>
-          <SignOut />
-        </ul>
-      </nav>
-    </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">Sign Out</TooltipContent>
+          </Tooltip>
+        </nav>
+      </aside>
+    </TooltipProvider>
   );
 };
 

@@ -1,37 +1,58 @@
 "use client";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Swal from "sweetalert2";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
-const DeleteBlock = ({ id, setTicketState }) => {
-  const [prevTickets, setTickets] = setTicketState;
+const DeleteBlock = ({ id, id2 }) => {
+  const { data: session, status, update } = useSession();
+  const [open, setOpen] = useState(false);
 
   const deleteTicket = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "you want to end this",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, end it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const updatedTickets = prevTickets.filter(
-          (ticket) => JSON.parse(ticket).dataset_type.split("_")[0] != id
-        );
-        setTickets(updatedTickets);
-        Swal.fire("Deleted!", "The ticket has been deleted.", "success");
-      }
-    });
+    let tempStocks = session?.user.stocks;
+    tempStocks = tempStocks.filter((item) => item !== id);
+    tempStocks = tempStocks.filter((item) => item !== id2);
+    update({ stocks: tempStocks });
+    setOpen(false);
   };
 
   return (
-    <FontAwesomeIcon
-      icon={faTrash}
-      className="text-red-400 hover:cursor-pointer hover:text-red-200 pt-1.5"
-      onClick={deleteTicket}
-    />
+    <>
+      <FontAwesomeIcon
+        icon={faTrash}
+        className="pt-1.5 cursor-pointer"
+        onClick={() => setOpen(true)}
+      />
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger></DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Stop watching</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to stop watching this stock?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={deleteTicket}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

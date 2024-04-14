@@ -1,49 +1,55 @@
 "use client";
 import React from "react";
-import { faThumbTack } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 // for latest data
 const PinBlock = ({ id }) => {
-  const investTicket = () => {
-    withReactContent(Swal).fire({
-      title: <i>Get current value:</i>,
-      preConfirm: async () => {
-        try {
-          const response = await fetch(
-            `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/latest?symbol=${encodeURIComponent(
-              id
-            )}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const data = await response.json();
-          let toPrint = JSON.stringify(data, null, 2);
-          Swal.fire({
-            title: "API Response",
-            text: toPrint,
-          });
-        } catch (error) {
-          console.error("Error invoking API route:", error);
-          throw error;
+  const [open, setOpen] = React.useState(false);
+  const [response, setResponse] = React.useState(null);
+
+  const investTicket = async () => {
+    try {
+      const response = await fetch(
+        `https://jdktzejo4f.execute-api.ap-southeast-2.amazonaws.com/prod/latest?symbol=${encodeURIComponent(
+          id
+        )}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      },
-    });
+      );
+      console.log("HI");
+      const data = await response.json();
+      setResponse(JSON.stringify(data, null, 2));
+      setOpen(true);
+    } catch (error) {
+      console.error("Error invoking API route:", error);
+    }
   };
 
   return (
-    <div onClick={investTicket}>
-      <FontAwesomeIcon
-        icon={faThumbTack}
-        className=" text-red-400 hover:cursor-pointer hover:text-red-200 pt-1.5"
-      />
-    </div>
+    <>
+      <div onClick={investTicket}>
+        <FontAwesomeIcon icon={faCircleInfo} className="pt-1.5" />
+      </div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger />
+        <DialogContent>
+          <DialogTitle>API Response</DialogTitle>
+          <pre>{response}</pre>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
