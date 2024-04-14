@@ -76,6 +76,38 @@ function SearchBar() {
             `${stockInfo.symbol} is already in your watchlist.`
           );
         }
+      } else if (stockInfo.exchange === "CCC") {
+        let tempStocks = session?.user.stocks;
+        let tempStockSymbol = stockInfo.symbol;
+        if (!tempStocks.includes(tempStockSymbol)) {
+          tempStocks.push(tempStockSymbol);
+          update({ stocks: tempStocks });
+          setAlertTitle("Success");
+          setAlertDescription(
+            `${stockInfo.symbol} has been added to your watchlist.`
+          );
+        } else {
+          setAlertTitle("Already Watched");
+          setAlertDescription(
+            `${stockInfo.symbol} is already in your watchlist.`
+          );
+        }
+      } else if (stockInfo.exchange === "CCY") {
+        let tempStocks = session?.user.stocks;
+        let tempStockSymbol = stockInfo.symbol;
+        if (!tempStocks.includes(tempStockSymbol)) {
+          tempStocks.push(tempStockSymbol);
+          update({ stocks: tempStocks });
+          setAlertTitle("Success");
+          setAlertDescription(
+            `${stockInfo.symbol} has been added to your watchlist.`
+          );
+        } else {
+          setAlertTitle("Already Watched");
+          setAlertDescription(
+            `${stockInfo.symbol} is already in your watchlist.`
+          );
+        }
       } else {
         setAlertTitle("Invalid Stock");
         setAlertDescription(`Not a Nasdaq or ASX stock.`);

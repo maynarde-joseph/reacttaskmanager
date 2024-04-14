@@ -29,23 +29,6 @@ const LevelUpPopup = ({ level, unlockedAvatar, unlockedBorder, onClose }) => {
             Keep up the great work and continue leveling up!
           </p>
           {unlockedAvatar && unlockedBorder && (
-            //   <div className="flex justify-center items-center space-x-4">
-            //   <Avatar className={`h-16 w-16`}>
-            //     <AvatarImage src={unlockedAvatar.url} />
-            //     <AvatarFallback>{unlockedAvatar.name.charAt(0)}</AvatarFallback>
-            //   </Avatar>
-            //   <Avatar className={`${unlockedBorder.style} h-16 w-16`}>
-            //     <AvatarImage />
-            //     <AvatarFallback>{unlockedBorder.name.charAt(0)}</AvatarFallback>
-            //   </Avatar>
-            //   <div>
-            //     <p className="text-lg font-semibold">
-            //       Unlocked: {unlockedAvatar.name} Icon
-            //       <br></br>
-            //       Unlocked: {unlockedBorder.name}
-            //     </p>
-            //   </div>
-            // </div>
             <div className="flex justify-center items-center space-x-4">
               <Avatar className={`${unlockedBorder.style} h-16 w-16`}>
                 <AvatarImage src={unlockedAvatar.url} />

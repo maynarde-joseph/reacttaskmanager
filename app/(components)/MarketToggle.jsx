@@ -11,7 +11,6 @@ import {
 
 export function MarketToggle({ selectedMarket, setSelectedMarket }) {
   useEffect(() => {
-    // Perform any necessary actions based on the selected market
     console.log("Selected market:", selectedMarket);
   }, [selectedMarket]);
 
@@ -29,6 +28,12 @@ export function MarketToggle({ selectedMarket, setSelectedMarket }) {
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setSelectedMarket("ASX")}>
             ASX
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setSelectedMarket("CCC")}>
+            CCC
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setSelectedMarket("CCY")}>
+            CCY
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import DeleteBlock from "./DeleteBlock";
-import DetailBlock from "./DetailBlock";
 import {
   Card,
   CardContent,
@@ -24,14 +23,17 @@ import {
 // looking into how to improve code style here
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MarketToggle } from "./MarketToggle";
+import HoldingsCell from "./HoldingsCell";
 
 const getCurrData = async (stockSymbol) => {
   let tempName = stockSymbol;
   if (stockSymbol.split(":")[0] == "ASX") {
     tempName = stockSymbol.split(":")[1];
     tempName = `${tempName}.AX`;
-  } else {
+  } else if (stockSymbol.split(":")[0] == "NASDAQ") {
     tempName = stockSymbol.split(":")[1];
+  } else {
+    tempName = stockSymbol;
   }
   const response = await fetch(
     `api/info?symbol=${encodeURIComponent(tempName)}`
@@ -72,8 +74,12 @@ const getCurrData = async (stockSymbol) => {
       } else if (stockInfo.exchange === "ASX") {
         let tempStockSymbol = `ASX:${stockInfo.symbol.split(".")[0]}`;
         stockInfo.symbolLong = tempStockSymbol;
-      } else {
-        console.log("HOW?");
+      } else if (stockInfo.exchange === "CCC") {
+        let tempStockSymbol = stockInfo.symbol.replace("-", "");
+        stockInfo.symbolLong = tempStockSymbol;
+      } else if (stockInfo.exchange === "CCY") {
+        let tempStockSymbol = stockInfo.symbol.split("=")[0];
+        stockInfo.symbolLong = tempStockSymbol;
       }
       return stockInfo;
     }
@@ -89,13 +95,20 @@ const StockTable = ({ mainStock }) => {
   const [error, setError] = useState(null);
   const { data: session, status, update } = useSession();
   const setSelectedStock = mainStock;
-
+  const [holdings, setHoldings] = useState([]);
   const handleStockClick = (stockName) => {
     setSelectedStock(stockName);
     console.log("CHANGED");
   };
 
   let allStocks = session?.user?.stocks;
+
+  useEffect(() => {
+    if (session) {
+      let tempHoldings = session.user?.curr_holdings || [];
+      setHoldings(tempHoldings);
+    }
+  }, [session]);
 
   useEffect(() => {
     const fetchStockData = async () => {
@@ -147,7 +160,7 @@ const StockTable = ({ mainStock }) => {
                   <TableHead>Stock</TableHead>
                   <TableHead>Value</TableHead>
                   <TableHead className="hidden sm:table-cell pr-2">
-                    Details
+                    Holding
                   </TableHead>
                   <TableHead className="hidden md:table-cell pr-2">
                     Delete
@@ -173,18 +186,28 @@ const StockTable = ({ mainStock }) => {
                       <TableCell>
                         <div className="font-medium">{ticket.symbol}</div>
                       </TableCell>
-                      <TableCell>{ticket.regularMarketPrice}</TableCell>
+                      <TableCell>
+                        {ticket.regularMarketPrice?.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </TableCell>
                       <TableCell
                         onClick={(e) => e.stopPropagation()}
-                        className="hidden sm:table-cell pl-8 pr-2"
+                        className="hidden sm:table-cell pr-2"
                       >
-                        <DetailBlock id={ticket.symbol} />
+                        <HoldingsCell stockSymbol={ticket.symbol} />
                       </TableCell>
                       <TableCell
                         onClick={(e) => e.stopPropagation()}
                         className="hidden md:table-cell pl-8 pr-2"
                       >
-                        <DeleteBlock id={ticket.symbol} />
+                        <DeleteBlock
+                          id={ticket.symbolLong}
+                          id2={ticket.symbol}
+                        />
                       </TableCell>
                     </TableRow>
                   ))

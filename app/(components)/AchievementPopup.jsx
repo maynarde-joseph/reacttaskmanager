@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 
 const achievements = [
   {
-    unlockCondition: (user) => user.stocks.length >= 1,
+    unlockCondition: (user) => user.stocks.length >= 2,
     id: 1,
     icon: <Torch />,
     title: "Light the Way",
@@ -73,7 +73,7 @@ const achievements = [
     experience: 50,
   },
   {
-    unlockCondition: (user) => user.stocks.length >= 100,
+    unlockCondition: (user) => user.balance >= 8000,
     id: 7,
     icon: <Mountain />,
     title: "Summit Reached",
@@ -82,7 +82,7 @@ const achievements = [
     experience: 50,
   },
   {
-    unlockCondition: (user) => user.stocks.length >= 100,
+    unlockCondition: (user) => user.stocks.length >= 1,
     id: 8,
     icon: <NewUser />,
     title: "Welcome, Trader!",
@@ -173,7 +173,7 @@ const AchievementPopup = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.5 }}
-        className="fixed bottom-4 right-4"
+        className="fixed bottom-4 right-4 z-50"
       >
         <Card>
           <Button

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Torch } from "./achievementIcons/torch";
@@ -13,6 +14,7 @@ import { NumberOne } from "./achievementIcons/numberOne";
 import { Ok } from "./achievementIcons/ok";
 import { Watch } from "./achievementIcons/watch";
 import { Water } from "./achievementIcons/water";
+import { useSession } from "next-auth/react";
 
 const achievements = [
   {
@@ -20,125 +22,124 @@ const achievements = [
     icon: <Torch />,
     title: "Light the Way",
     description: "Discover your first stock.",
-    locked: false,
   },
   {
     id: 2,
     icon: <Clock />,
     title: "Timely Trader",
     description: "Make your first trade.",
-    locked: false,
   },
   {
     id: 3,
     icon: <Complete />,
     title: "Mission Accomplished",
     description: "Complete your first goal.",
-    locked: false,
   },
   {
     id: 4,
     icon: <Cup />,
     title: "Winner's Cup",
     description: "Reach the top 10% of portfolios.",
-    locked: true,
   },
   {
     id: 5,
     icon: <Finish />,
     title: "Finish Line",
     description: "Achieve a 100% return on investment.",
-    locked: true,
   },
   {
     id: 6,
     icon: <Medal />,
     title: "Medal of Honor",
     description: "Earn a spot on the leaderboard.",
-    locked: true,
   },
   {
     id: 7,
     icon: <Mountain />,
     title: "Summit Reached",
     description: "Grow your portfolio to $100,000.",
-    locked: true,
   },
   {
     id: 8,
     icon: <NewUser />,
     title: "Welcome, Trader!",
     description: "Create your account.",
-    locked: true,
   },
   {
     id: 9,
     icon: <NumberOne />,
     title: "Top Performer",
     description: "Reach the #1 spot on the leaderboard.",
-    locked: true,
   },
   {
     id: 10,
     icon: <Ok />,
     title: "Approved",
     description: "Verify your account.",
-    locked: true,
   },
   {
     id: 11,
     icon: <Watch />,
     title: "Watchful Eye",
     description: "Add 10 stocks to your watchlist.",
-    locked: true,
   },
   {
     id: 12,
     icon: <Water />,
     title: "Liquid Assets",
     description: "Maintain a cash balance of $10,000.",
-    locked: true,
   },
 ];
 
 export const AchievementBoard = () => {
+  const { data: session, status, update } = useSession();
+  const unlockedAchievements = session?.user.achievements || [];
+  const unlockedCount = unlockedAchievements.length;
+
+  // might be needed i dont think we do
+  // useEffect(() => {}, [session]);
   return (
     <div>
       <HeaderBar pageName="Achievements" />
       <div className="container mx-auto py-8">
         <Card>
           <CardHeader>
-            <CardTitle>Unlocked 10/12</CardTitle>
+            <CardTitle>
+              Unlocked {unlockedCount}/{achievements.length}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {achievements.map((achievement, index) => (
-                <Card
-                  key={index}
-                  className={achievement.locked ? "opacity-50" : ""}
-                >
-                  <CardHeader>
-                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-primary-foreground">
-                      {achievement.icon}
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <h3 className="text-lg font-semibold">
-                      {achievement.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      {achievement.description}
-                    </p>
-                    {achievement.locked && (
-                      <div className="mt-4">
-                        <span className="text-sm font-semibold text-muted-foreground">
-                          Locked
-                        </span>
+              {achievements.map((achievement, index) => {
+                const isUnlocked = unlockedAchievements.includes(
+                  achievement.id
+                );
+
+                return (
+                  <Card key={index} className={!isUnlocked ? "opacity-50" : ""}>
+                    <CardHeader>
+                      <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-primary-foreground">
+                        {achievement.icon}
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardHeader>
+                    <CardContent>
+                      <h3 className="text-lg font-semibold">
+                        {achievement.title}
+                      </h3>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        {achievement.description}
+                      </p>
+                      {!isUnlocked && (
+                        <div className="mt-4">
+                          <span className="text-sm font-semibold text-muted-foreground">
+                            Locked
+                          </span>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </CardContent>
         </Card>

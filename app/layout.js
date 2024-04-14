@@ -1,13 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { AuthProvider } from "./Providers";
 import { ThemeProvider } from "./(components)/theme-provider";
 import "@radix-ui/themes/styles.css";
-import Nav from "./(components)/Nav";
 import NavWrap from "./(components)/NavWrap";
-// config.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
 

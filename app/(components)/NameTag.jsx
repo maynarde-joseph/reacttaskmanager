@@ -39,9 +39,15 @@ const calculateLevel = (exp) => {
 
 const avatars = [
   {
-    id: 1,
+    id: 0,
     name: "The Farmer",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE14EsW1uTtabJtchrCcnr7kEBTdPyDqUSoA&s",
+    requiredLevel: 0,
+  },
+  {
+    id: 1,
+    name: "Ring",
+    url: "https://avatarfiles.alphacoders.com/374/374052.png",
     requiredLevel: 1,
   },
   {
@@ -98,16 +104,16 @@ const avatars = [
     url: "https://avatarfiles.alphacoders.com/370/370775.png",
     requiredLevel: 10,
   },
-  {
-    id: 11,
-    name: "Ring",
-    url: "https://avatarfiles.alphacoders.com/374/374052.png",
-    requiredLevel: 11,
-  },
 ];
 
 const borders = [
-  { id: 1, name: "No Border", style: "", requiredLevel: 1 },
+  { id: 0, name: "No Border", style: "", requiredLevel: 0 },
+  {
+    id: 1,
+    name: "Gray Border",
+    style: "outline outline-1 outline-gray-700",
+    requiredLevel: 1,
+  },
   {
     id: 2,
     name: "Red Border",
@@ -161,12 +167,6 @@ const borders = [
     name: "Indigo Border",
     style: "outline outline-1 outline-indigo-700",
     requiredLevel: 10,
-  },
-  {
-    id: 11,
-    name: "Gray Border",
-    style: "outline outline-1 outline-gray-700",
-    requiredLevel: 11,
   },
 ];
 
@@ -234,9 +234,12 @@ const NameTag = () => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <div className="flex flex-row gap-2">
-            <Card onClick={(e) => e.stopPropagation()}>
-              <CardContent className="flex flex-col items-center py-2">
+          <div className="flex flex-row gap-1">
+            <Card
+              onClick={(e) => e.stopPropagation()}
+              className="border-0 outline-none"
+            >
+              <CardContent className="flex flex-col items-center py-0">
                 <p className="text-sm font-semibold">Level {level}</p>
                 <Progress value={progress} className="w-full h-2 my-1" />
                 <p className="text-xs">
@@ -244,8 +247,8 @@ const NameTag = () => {
                 </p>
               </CardContent>
             </Card>
-            <Card className="hover:cursor-pointer pt-1">
-              <CardContent className="flex items-center px-4 pt-1 pb-1">
+            <Card className="hover:cursor-pointer py-0">
+              <CardContent className="flex items-center px-2 py-1">
                 <Avatar className={selectedBorder.style}>
                   <AvatarImage src={selectedAvatar.url} />
                   <AvatarFallback>CN</AvatarFallback>

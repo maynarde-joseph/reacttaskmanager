@@ -14,13 +14,14 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-const DeleteBlock = ({ id }) => {
+const DeleteBlock = ({ id, id2 }) => {
   const { data: session, status, update } = useSession();
   const [open, setOpen] = useState(false);
 
   const deleteTicket = () => {
     let tempStocks = session?.user.stocks;
     tempStocks = tempStocks.filter((item) => item !== id);
+    tempStocks = tempStocks.filter((item) => item !== id2);
     update({ stocks: tempStocks });
     setOpen(false);
   };

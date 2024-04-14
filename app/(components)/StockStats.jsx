@@ -9,7 +9,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import { DialogDescription } from "@radix-ui/react-dialog";
 export const StockStats = ({ mainStock }) => {
   const [stockData, setStockData] = useState(null);
   useEffect(() => {
@@ -28,7 +36,7 @@ export const StockStats = ({ mainStock }) => {
     } else if (number >= million) {
       return `$${(number / million).toFixed(1)}M`;
     } else {
-      return number.toLocaleString("en-US", {
+      return number?.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",
       });
@@ -36,14 +44,40 @@ export const StockStats = ({ mainStock }) => {
   };
 
   return (
-    <div className="p-4 pt-0 pr-0 overflow-scroll">
+    <div className="">
       {stockData ? (
         <Card className="">
           <CardHeader className="flex flex-row items-start bg-muted/50">
             <div className="grid gap-0.5">
-              <CardTitle className="text-lg">{stockData.symbol}</CardTitle>
+              <div className="flex flex-row center">
+                <CardTitle className="text-lg">{stockData.symbol}</CardTitle>
+                <Dialog className="">
+                  <DialogTrigger asChild className="pt-1 pl-1">
+                    <div className="hover:cursor-pointer">
+                      <QuestionMarkCircledIcon className="h-5 w-5" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="">
+                    <Dialog className="flex flex-row items-start bg-muted/50 p-2">
+                      <div className="grid gap-0.5">
+                        <DialogTitle className="text-lg">
+                          {stockData.longName}
+                        </DialogTitle>
+                        <DialogDescription>
+                          {stockData.industry} - {stockData.sector}
+                        </DialogDescription>
+                      </div>
+                    </Dialog>
+                    <ScrollArea className="h-24">
+                      <CardContent className="p-3 text-sm">
+                        {stockData.longBusinessSummary}
+                      </CardContent>
+                    </ScrollArea>
+                  </DialogContent>
+                </Dialog>
+              </div>
               <CardTitle>
-                {stockData.regularMarketPrice.toLocaleString("en-US", {
+                {stockData.regularMarketPrice?.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
                   minimumFractionDigits: 2,
@@ -60,32 +94,32 @@ export const StockStats = ({ mainStock }) => {
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Bid</span>
                   <span>
-                    {(stockData.bid || 0).toLocaleString("en-US", {
+                    {stockData.bid?.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    })}
+                    }) || "N/A"}
                   </span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Bid Amount</span>
-                  <span>{stockData.bidSize || 0}</span>
+                  <span>{stockData.bidSize || "N/A"}</span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Ask</span>
                   <span>
-                    {(stockData.ask || 0).toLocaleString("en-US", {
+                    {stockData.ask?.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    })}
+                    }) || "N/A"}
                   </span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Ask Amount</span>
-                  <span>{stockData.askSize || 0}</span>
+                  <span>{stockData.askSize || "N/A"}</span>
                 </li>
               </ul>
               <Separator className="my-2" />
@@ -94,14 +128,14 @@ export const StockStats = ({ mainStock }) => {
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Day</span>
                   <span>
-                    {stockData.regularMarketDayLow.toLocaleString("en-US", {
+                    {stockData.regularMarketDayLow?.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}{" "}
                     -{" "}
-                    {stockData.regularMarketDayHigh.toLocaleString("en-US", {
+                    {stockData.regularMarketDayHigh?.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                       minimumFractionDigits: 2,
@@ -112,14 +146,14 @@ export const StockStats = ({ mainStock }) => {
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">52W</span>
                   <span>
-                    {stockData.fiftyTwoWeekLow.toLocaleString("en-US", {
+                    {stockData.fiftyTwoWeekLow?.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}{" "}
                     -{" "}
-                    {stockData.fiftyTwoWeekHigh.toLocaleString("en-US", {
+                    {stockData.fiftyTwoWeekHigh?.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                       minimumFractionDigits: 2,
@@ -153,7 +187,7 @@ export const StockStats = ({ mainStock }) => {
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Price to Book</span>
                     <span>
-                      {stockData.priceToBook.toLocaleString("en-US", {
+                      {stockData.priceToBook?.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
                         minimumFractionDigits: 2,
@@ -166,7 +200,7 @@ export const StockStats = ({ mainStock }) => {
                       Dividend Yield
                     </span>
                     <span>
-                      {stockData.dividendYield.toLocaleString("en-US", {
+                      {stockData.dividendYield?.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
                         minimumFractionDigits: 4,
@@ -177,7 +211,7 @@ export const StockStats = ({ mainStock }) => {
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Dividend Rate</span>
                     <span>
-                      {stockData.dividendRate.toLocaleString("en-US", {
+                      {stockData.dividendRate?.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
                         minimumFractionDigits: 4,
@@ -188,7 +222,7 @@ export const StockStats = ({ mainStock }) => {
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Payout Ratio</span>
                     <span>
-                      {stockData.payoutRatio.toLocaleString("en-US", {
+                      {stockData.payoutRatio?.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
                         minimumFractionDigits: 4,

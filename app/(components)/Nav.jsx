@@ -4,7 +4,6 @@ import Link from "next/link";
 import React from "react";
 import {
   MoonIcon,
-  GearIcon,
   ExitIcon,
   Crosshair2Icon,
   RocketIcon,
@@ -12,6 +11,7 @@ import {
   ArchiveIcon,
   DashboardIcon,
   InfoCircledIcon,
+  GlobeIcon,
 } from "@radix-ui/react-icons";
 import { usePathname } from "next/navigation";
 import {
@@ -20,7 +20,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Layers, LayersIcon } from "lucide-react";
+import { LayersIcon } from "lucide-react";
+import { IoIosGitCompare } from "react-icons/io";
 
 const Nav = () => {
   let pathname = usePathname();
@@ -83,6 +84,22 @@ const Nav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
+                href="/compare"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/compare")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <IoIosGitCompare className="size-7" />
+                <span className="sr-only">Compare</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Compare</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
                 href="/portfolio"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
                   isActive("/portfolio")
@@ -107,10 +124,10 @@ const Nav = () => {
                 }`}
               >
                 <Crosshair2Icon width={24} height={24} />
-                <span className="sr-only">Ranking</span>
+                <span className="sr-only">Achievements</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Ranking</TooltipContent>
+            <TooltipContent side="right">Achievements</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -123,10 +140,10 @@ const Nav = () => {
                 }`}
               >
                 <LayersIcon width={24} height={24} />
-                <span className="sr-only">Achievements</span>
+                <span className="sr-only">Ranking</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Achievements</TooltipContent>
+            <TooltipContent side="right">Ranking</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -143,6 +160,22 @@ const Nav = () => {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">Subscription</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/forums"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
+                  isActive("/forums")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <GlobeIcon width={24} height={24} />
+                <span className="sr-only">Forums</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Forums</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>

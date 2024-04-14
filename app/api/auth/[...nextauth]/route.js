@@ -123,6 +123,22 @@ export const authOptions = {
         }
       }
 
+      if (trigger === "update" && session?.curr_holdings) {
+        token.curr_holdings = session.curr_holdings;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { curr_holdings: token.curr_holdings },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
       if (trigger === "update" && session?.experience) {
         token.experience = session.experience;
 
@@ -235,6 +251,22 @@ export const authOptions = {
         }
       }
 
+      if (trigger === "update" && session?.first_login == false) {
+        token.first_login = session.first_login;
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: token.id },
+          { first_login: token.first_login },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("not fail fish");
+        } else {
+          console.log("fail fish");
+        }
+      }
+
       if (user) {
         return {
           ...token,
@@ -246,6 +278,7 @@ export const authOptions = {
           pend_inv: user.pending_investments,
           curr_inv: user.curr_investments,
           prev_inv: user.prev_investments,
+          curr_holdings: user.curr_holdings,
           balance: user.balance,
           level: user.level,
           avatar: user.avatar,
@@ -271,6 +304,7 @@ export const authOptions = {
           first_login: token.first_login,
           pend_inv: token.pend_inv,
           prev_inv: token.prev_inv,
+          curr_holdings: token.curr_holdings,
           level: token.level,
           avatar: token.avatar,
           border: token.border,

@@ -17,6 +17,7 @@ const userSchema = new Schema(
     first_login: Boolean,
     achievements: [Number],
     watched_stocks: [String],
+    curr_holdings: [{ stock: String, amount: Number }],
     pending_investments: [
       {
         stock: String,

@@ -28,18 +28,24 @@ function TradingViewWidget({ mainStock }) {
           "calendar": false,
           "support_host": "https://www.tradingview.com"
         }`;
+    const widgetContainer = document.createElement("div");
+    widgetContainer.className = "";
+    widgetContainer.style.height = "97%";
+    widgetContainer.style.width = "100%";
+
     while (container.current.firstChild) {
       container.current.removeChild(container.current.firstChild);
     }
 
-    container.current.appendChild(script);
+    widgetContainer.appendChild(script);
+    container.current.appendChild(widgetContainer);
   }, [mainStock]);
 
   return (
     <div
       className="tradingview-widget-container m-1 mt-0 ml-0"
       ref={container}
-      style={{ height: "100%", width: "100%" }}
+      style={{ height: "97%", width: "100%" }}
     ></div>
   );
 }
