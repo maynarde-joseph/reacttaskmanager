@@ -52,9 +52,10 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      // backgroundImage: {
-      //   "hero-pattern1":
-      //     "url('https://www.imperva.com/products/wp-content/uploads/sites/11/2023/05/bg.png')",
+      backgroundImage: {
+        "hero-pattern1":
+          "url('https://www.imperva.com/products/wp-content/uploads/sites/11/2023/05/bg.png')",
+      },
       //   "hero-pattern2":
       //     "url('https://hiddenlayer.com/wp-content/uploads/HiddenLayer-Homepage-%E2%80%93-Slide-5.jpg')",
       //   "hero-pattern3":

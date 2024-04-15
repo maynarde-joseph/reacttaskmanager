@@ -66,67 +66,81 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="flex h-screen w-screen">
-      <div className="flex-grow my-20 mr-32 grid grid-cols-2">
-        <div className="rounded-l-3xl rt-r-position-relative border-2">
-          <div className="mt-4">
-            <div className="p-7 flex items-center">
-              <MoonIcon width="30" height="30" transform="scale(-1,1)" />
-              <h1 className="text-7 font-bold">CRESCENTBYTE</h1>
-            </div>
-          </div>
-          <div className="p-7 rt-r-position-absolute bottom-0">
-            CrescentByte “This stock investment simulator has saved me time and
-            money, helping me get a foothold into the stock game!” Bobby Lee
-          </div>
-        </div>
-        <div className="rounded-r-3xl flex border-2 bg-zinc-900">
-          <div className="justify-center m-auto">
-            <div className="flex flex-col space-y-2 text-center pb-4">
-              <h1 className="text-2xl font-semibold tracking-tight">
-                Register
+    <div className="flex h-screen pl-0 p-14">
+      <section className=" text-white py-20 bg-hero-pattern1 w-full h-full bg-cover bg-right rounded-2xl">
+        <div className="container mx-auto px-4 ">
+          <div className="md:flex md:items-center ">
+            <div className="md:w-1/2">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                <div className="flex flex-row gap-1">
+                  <div className="pt-1">
+                    <MoonIcon width={41} height={41} transform="scale(-1,1)" />
+                  </div>
+                  <div>CrescentByte</div>
+                </div>
+                is the Best Way to
+                <br />
+                Learn Trading
               </h1>
-              <p className="text-sm">Watch, Learn, and Byte Into Stocks</p>
+              <p className="text-gray-400 mb-8">
+                CrescentByte presents its cutting edge stock learning and
+                simulating platform. Compete for the monthly leaderboard prize
+                and learn to become the next Warren Buffett
+              </p>
+              <a className="inline-block bg-slate-800 text-white px-8 py-3 rounded-full text-lg uppercase tracking-wide hover:bg-gray-600">
+                Learn More &rarr;
+              </a>
             </div>
-            <form
-              onSubmit={handleSubmit}
-              className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]"
-            >
-              <Input
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-                placeholder="Full Name"
-              />
-              <Input
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="Email"
-              />
-              <Input
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="Password"
-              />
-              <Button type="submit">Register</Button>
-
-              {error && (
-                <Alert className="bg-zinc-900 border-0">
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>Email already exists</AlertDescription>
-                  </Alert>
-                </Alert>
-              )}
-
-              <Link className="text-sm mt-3 text-right text-white" href={"/"}>
-                Already have an account?{" "}
-                <span className="underline">Login</span>
-              </Link>
-            </form>
+            <div className="md:w-1/2 mt-8 md:mt-0 md:pl-8">
+              <div className=" rounded-lg p-4 h-96 flex flex-col justify-between">
+                <form
+                  onSubmit={handleSubmit}
+                  className="mx-auto flex w-full flex-col justify-center space-y-4 sm:w-[350px]"
+                >
+                  <h1 className="text-3xl md:text-3xl font-bold">
+                    Welcome to CrescentByte!
+                  </h1>
+                  <h1 className="text-sm">Register for an account.</h1>
+                  <Input
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    placeholder="Full Name"
+                  />
+                  <Input
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    placeholder="Email"
+                  />
+                  <Input
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    placeholder="Password"
+                  />
+                  <Button
+                    type="submit"
+                    className="rounded-md bg-blue-600 text-white py-2"
+                  >
+                    Register
+                  </Button>
+                  {error && (
+                    <Alert className="bg-red-100 border-red-400 text-red-700 p-4 rounded-md">
+                      <AlertCircle className="h-5 w-5 text-red-400 mr-2" />
+                      <AlertTitle className="font-medium">Error</AlertTitle>
+                      <AlertDescription>Email already exists</AlertDescription>
+                    </Alert>
+                  )}
+                  <div className="text-center text-sm">
+                    Already have an account?
+                    <Link href="/" className="pl-1">
+                      <u>Login here!</u>
+                    </Link>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
