@@ -141,7 +141,7 @@ const AchievementPopup = () => {
       achievements.forEach((achievement) => {
         if (
           achievement.unlockCondition(user) &&
-          !user.achievements.includes(achievement.id)
+          !user.achievements?.includes(achievement.id)
         ) {
           setUnlockedAchievement(achievement);
           setShowPopup(true);

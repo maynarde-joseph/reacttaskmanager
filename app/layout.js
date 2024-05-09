@@ -5,6 +5,7 @@ import { AuthProvider } from "./Providers";
 import { ThemeProvider } from "./(components)/theme-provider";
 import "@radix-ui/themes/styles.css";
 import NavWrap from "./(components)/NavWrap";
+import { Theme, ThemePanel } from "@radix-ui/themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,6 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
-          {/* HTML error is from them */}
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"

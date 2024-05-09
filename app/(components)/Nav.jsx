@@ -22,8 +22,20 @@ import {
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LayersIcon } from "lucide-react";
 import { IoIosGitCompare } from "react-icons/io";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { NavExtend } from "./NavExtend";
+import { useTheme } from "next-themes";
 
 const Nav = () => {
+  const { theme, setTheme } = useTheme();
+
   let pathname = usePathname();
 
   if (pathname === "/") {
@@ -38,17 +50,26 @@ const Nav = () => {
     return pathname === href;
   };
 
+  const handleSignOut = () => {
+    signOut();
+    setTheme("dark");
+  };
+
   return (
     <TooltipProvider>
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-          <Link
-            href="/dashboard"
-            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-          >
-            <MoonIcon width={24} height={24} transform="scale(-1,1)" />
-            <span className="sr-only">CRESCENTBYTE</span>
-          </Link>
+          <Sheet key="left">
+            <SheetTrigger asChild>
+              <div className="hover:cursor-pointer group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base">
+                <MoonIcon width={24} height={24} transform="scale(-1,1)" />
+                <span className="sr-only">CRESCENTBYTE</span>
+              </div>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[250px] sm:w-[250px]">
+              <NavExtend />
+            </SheetContent>
+          </Sheet>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
@@ -197,7 +218,7 @@ const Nav = () => {
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
           <Tooltip>
             <TooltipTrigger asChild>
-              <div onClick={() => signOut()}>
+              <div onClick={handleSignOut}>
                 <Link
                   href="/"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"

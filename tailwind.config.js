@@ -51,17 +51,34 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        keyframes: {
+          "accordion-down": {
+            from: { height: "0" },
+            to: { height: "var(--radix-accordion-content-height)" },
+          },
+          "accordion-up": {
+            from: { height: "var(--radix-accordion-content-height)" },
+            to: { height: "0" },
+          },
+        },
+        animation: {
+          "accordion-down": "accordion-down 0.2s ease-out",
+          "accordion-up": "accordion-up 0.2s ease-out",
+        },
       },
       backgroundImage: {
         "hero-pattern1":
           "url('https://www.imperva.com/products/wp-content/uploads/sites/11/2023/05/bg.png')",
+        "hero-pattern2":
+          "url('https://d2ik0kd8ivv1yl.cloudfront.net/media/2022/05/background.png')",
+        "hero-pattern4":
+          "url('https://files.123freevectors.com/wp-content/original/131672-purple-and-white-triangle-geometric-background-vector.jpg')",
       },
-      //   "hero-pattern2":
-      //     "url('https://hiddenlayer.com/wp-content/uploads/HiddenLayer-Homepage-%E2%80%93-Slide-5.jpg')",
+
       //   "hero-pattern3":
       //     "url('https://d2ik0kd8ivv1yl.cloudfront.net/media/2022/05/background.png')",
       //   "hero-pattern4":
-      //     "url('https://www.imperva.com/products/wp-content/uploads/sites/11/2022/05/waf-gartner-magic-quadrant-bg.jpg')",
+      //     "url('https://files.123freevectors.com/wp-content/original/131672-purple-and-white-triangle-geometric-background-vector.jpg')",
       //   "hero-pattern5":
       //     "url('https://static.vecteezy.com/system/resources/previews/020/562/192/original/abstract-contour-wireframe-retro-futuristic-background-vector.jpg')",
       //   "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -52,10 +52,10 @@ export const PlanDetails = () => {
       <div className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="mt-1 text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl">
-              Choose the plan thats right for you
-            </p>
-            <p className="text-xl text-center mb-12 pt-4">
+            <h1 className="text-4xl font-bold mb-8 text-center">
+              Choose the plan thats right for you!
+            </h1>
+            <p className="text-xl text-center mb-12">
               We want to help you but we need your help too.
               <br />
               Get started with paid monthly subscriptions for more features and

@@ -123,7 +123,7 @@ export const CompareBoard = () => {
   return (
     <div>
       <div className="w-11/12 m-auto">
-        <CompareInstructions />
+        <CompareInstructions stock1={stockData1} stock2={stockData2} />
       </div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <div className="flex flex-row justify-center gap-4">

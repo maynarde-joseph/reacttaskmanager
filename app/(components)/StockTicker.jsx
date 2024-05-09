@@ -2,11 +2,12 @@
 // The error we get is widget checks for the existance of of the original div
 // Our useEffect removes all divs from it resulting in the error
 // If anyone finds a way to keep it then nice if not gg the error doesnt actually impact anything
-
+import { useTheme } from "next-themes";
 import React, { useEffect, useRef, memo } from "react";
 
 function TradingViewWidget({ mainStock }) {
   const container = useRef();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -21,7 +22,7 @@ function TradingViewWidget({ mainStock }) {
           "symbol": "${mainStock}",
           "interval": "D",
           "timezone": "Etc/UTC",
-          "theme": "dark",
+          "theme": "${theme === "light" ? "light" : "dark"}",
           "style": "1",
           "locale": "en",
           "enable_publishing": false,
@@ -39,7 +40,7 @@ function TradingViewWidget({ mainStock }) {
 
     widgetContainer.appendChild(script);
     container.current.appendChild(widgetContainer);
-  }, [mainStock]);
+  }, [mainStock, theme]);
 
   return (
     <div

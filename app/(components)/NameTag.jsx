@@ -247,7 +247,7 @@ const NameTag = () => {
                 </p>
               </CardContent>
             </Card>
-            <Card className="hover:cursor-pointer py-0">
+            <Card className="hover:cursor-pointer py-0 border-0 outline-none">
               <CardContent className="flex items-center px-2 py-1">
                 <Avatar className={selectedBorder.style}>
                   <AvatarImage src={selectedAvatar.url} />

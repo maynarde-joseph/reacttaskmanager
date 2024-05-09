@@ -1,16 +1,13 @@
-import React from "react";
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
-import HeaderBar from "./HeaderBar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -18,8 +15,50 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import HeaderBar from "./HeaderBar";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Loader2 } from "lucide-react";
+
+const sendSupportEmail = async (body) => {
+  console.log(body);
+  const response = await fetch("/api/mail", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  console.log(response);
+  if (response.ok) {
+    const { data } = await response.json();
+    console.log("Received:", data);
+  } else {
+    console.error("Error:", response.status);
+    return null;
+  }
+};
 
 export const GettingStarted = () => {
+  const { data: session, status, update } = useSession();
+  const [supportType, setSupportType] = useState("system");
+  const [supportTitle, setSupportTitle] = useState("");
+  const [supportContent, setSupportContent] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
       <HeaderBar pageName="Information Hub" />
@@ -389,11 +428,15 @@ export const GettingStarted = () => {
                       id="content2"
                       placeholder="Type title here..."
                       className="min-h-[1rem]"
+                      onChange={(e) => setSupportTitle(e.target.value)}
                     />
                   </div>
                   <div className="grid gap-3">
                     <Label htmlFor="role">Type</Label>
-                    <Select defaultValue="system">
+                    <Select
+                      defaultValue="system"
+                      onValueChange={(value) => setSupportType(value)}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Select a role" />
                       </SelectTrigger>
@@ -413,9 +456,53 @@ export const GettingStarted = () => {
                       id="content"
                       placeholder="Type message here..."
                       className="min-h-[9.5rem]"
+                      onChange={(e) => setSupportContent(e.target.value)}
                     />
                   </div>
-                  <Button className="w-40">Submit Complaint</Button>
+                  <Button
+                    type="button"
+                    className="w-40"
+                    disabled={isLoading}
+                    onClick={async () => {
+                      setIsLoading(true);
+                      await sendSupportEmail({
+                        supportTitle,
+                        supportType,
+                        supportContent,
+                        email: session?.user?.email,
+                      });
+                      setSupportTitle("");
+                      setSupportType("system");
+                      setSupportContent("");
+                      setIsLoading(false);
+                      setShowAlert(true);
+                    }}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Submit Complaint"
+                    )}
+                  </Button>
+                  <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Email Sent</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Your support request has been successfully sent. We
+                          will get back to you as soon as possible.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogAction onClick={() => setShowAlert(false)}>
+                          OK
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </fieldset>
               </form>
             </div>

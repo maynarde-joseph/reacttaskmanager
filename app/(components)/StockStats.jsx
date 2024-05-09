@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/dialog";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import { Skeleton } from "@/components/ui/skeleton";
+
 export const StockStats = ({ mainStock }) => {
   const [stockData, setStockData] = useState(null);
   useEffect(() => {
@@ -239,11 +241,15 @@ export const StockStats = ({ mainStock }) => {
         <Card className="overflow-hidden">
           <CardHeader className="flex flex-row items-start bg-muted/50">
             <div className="grid gap-0.5">
-              <CardTitle className="text-lg">Loading</CardTitle>
-              <CardDescription>Loading</CardDescription>
+              <Skeleton className="h-4 w-1/2 mb-2" />
+              <Skeleton className="h-4 w-1/3" />
             </div>
           </CardHeader>
-          <CardContent className="p-6 text-sm"></CardContent>
+          <CardContent className="p-6">
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-4/5 mb-2" />
+            <Skeleton className="h-4 w-3/5" />
+          </CardContent>
         </Card>
       )}
     </div>

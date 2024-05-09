@@ -11,14 +11,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function SelectStock({ onSelect }) {
+export function SelectAnalysisStock({ onSelect }) {
   return (
     <Select onValueChange={onSelect}>
-      <SelectTrigger className="w-[280px]">
+      <SelectTrigger className="w-[150px]">
         <SelectValue placeholder="Select a stock" />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup>
+      <SelectGroup>
           <SelectLabel>NASDAQ</SelectLabel>
           <SelectItem value="AAPL">AAPL</SelectItem>
           <SelectItem value="AMZN">AMZN</SelectItem>

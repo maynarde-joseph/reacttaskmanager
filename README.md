@@ -1,30 +1,32 @@
+# 🌙 CrescentByte Frontend 🌙
+A gamified stock trading platform that makes it easy and exciting for beginners to start investing. With features like achievements, leaderboards, and levelling up, our app motivates users to learn about the markets and keep trading in a fun, engaging way.  
 ## Getting Started
+When setting up for the first time
+```bash
+npm install
+```
 
+## Deploying
+Once you've created a new feature on your branch, create a merge request to main.
+If the build succeeds, the updated code on main will automatically be deployed via AWS Amplify.
+
+## Developing
+To start the server when you are developping, run:
 ```bash
 npm run dev
 ```
 
-## Whats Done and What to Do?
+## Linting
+```bash
+npm run lint
+```
 
-Whats done:
+## Testing
+```bash
+npm run lint
+```
 
-- Authentication has been setup with custom credentials (linked to mongoDB)
-- I have moved current price to app/api so it can be used as API (use as ref for others)
-- The LargestChange component (document icon) allows you to "buy stock" (fully functioning)
-- Auto directed to / (signup) if you have an existing session you are directed to /dashboard
-- The model for User is in app/(models)/User.js
-
-TODO:
-
-- Need to rename components, I wrote this stuff but im still confused
-- Create API routes for all other lambda's (use current price as example)
-- I think we need CI/CD? If we deploy to vercel I think its auto handled
-- Redesign LoginForm and RegisterForm (both were copied from example on github)
-- Make more visually appealing (just ideas are good)
-
-## To consider
-
-Waiting for opinions:
-
-- Should we use prisma? Works with mongoDB
-- Should we use custom credentials or google auth? Its troublesome to integrate both
+## Documentation
+- [Project space](https://unswcse.atlassian.net/wiki/spaces/F14BCRESCE/overview?homepageId=363824754)
+- [JIRA board](https://unswcse.atlassian.net/jira/software/projects/F14BCRESCE/boards/287)
+- [Product Features](https://unswcse.atlassian.net/wiki/spaces/F14BCRESCE/pages/431262308/Product+Features)

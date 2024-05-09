@@ -96,7 +96,7 @@ export const UserPortfolio = () => {
           <div className="flex justify-between items-center mb-8">
             <div>
               <h2 className="text-2xl font-bold">
-                Hey {session?.user?.name || "Loading"}
+                Hey, {session?.user?.name || "Loading"}
               </h2>
               <p>Lets dive into your portfolio!</p>
             </div>

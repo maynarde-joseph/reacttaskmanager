@@ -1,5 +1,5 @@
 "use client";
-
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
@@ -9,12 +9,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { ModeToggle } from "./ThemeToggle";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const { theme } = useTheme();
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -40,7 +41,11 @@ export default function LoginForm() {
 
   return (
     <div className="flex h-screen pl-0 p-14">
-      <section className=" text-white py-20 bg-hero-pattern1 w-full h-full bg-cover bg-right rounded-2xl">
+      <section
+        className={`py-20 w-full h-full bg-cover bg-right rounded-2xl ${
+          theme === "light" ? "bg-hero-pattern4" : "bg-hero-pattern2"
+        }`}
+      >
         <div className="container mx-auto px-4 ">
           <div className="md:flex md:items-center ">
             <div className="md:w-1/2">
@@ -55,14 +60,24 @@ export default function LoginForm() {
                 <br />
                 Learn Trading
               </h1>
-              <p className="text-gray-400 mb-8">
+              <p className=" mb-8">
                 CrescentByte presents its cutting edge stock learning and
                 simulating platform. Compete for the monthly leaderboard prize
-                and learn to become the next Warren Buffett
+                and learn to become the next Warren Buffett!
               </p>
-              <a className="inline-block bg-slate-800 text-white px-8 py-3 rounded-full text-lg uppercase tracking-wide hover:bg-gray-600">
-                Learn More &rarr;
-              </a>
+              <div className="flex flex-row items-center">
+                <a
+                  href="https://app.swaggerhub.com/apis-docs/JAMJAMESHE1/CrescentByte/1.0.0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-4 py-3 rounded-full text-lg tracking-wide border-2"
+                >
+                  <u>Learn More</u>
+                </a>
+                <div className="pl-2">
+                  <ModeToggle />
+                </div>
+              </div>
             </div>
             <div className="md:w-1/2 mt-8 md:mt-0 md:pl-8">
               <div className=" rounded-lg p-4 h-96 flex flex-col justify-between">
@@ -85,13 +100,13 @@ export default function LoginForm() {
                     placeholder="Password"
                   />
                   <div className="flex items-center justify-between">
-                    <Link className="text-sm " href="/forgot-password">
+                    <Link className="text-sm " href="/">
                       <u>Forgot Password?</u>
                     </Link>
                   </div>
                   <Button
                     type="submit"
-                    className="rounded-md bg-blue-600 text-white py-2"
+                    className="rounded-md bg-blue-600 py-2 hover:bg-blue-500"
                   >
                     Login
                   </Button>

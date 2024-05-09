@@ -50,6 +50,7 @@ const getMarketStatus = async (market) => {
 
 export function TradePopup({ mainStock }) {
   const [selectedOption, setSelectedOption] = useState("Buy");
+  const [currStock, setCurrStock] = useState(null);
   const [marketStatus, setMarketStatus] = useState(null);
   const [quantity, setQuantity] = useState("");
   const { data: session, status, update } = useSession();
@@ -159,6 +160,7 @@ export function TradePopup({ mainStock }) {
       if (mainStock) {
         const data = await getMarketStatus(mainStock.exchange);
         setMarketStatus(data);
+        setCurrStock(mainStock.symbol);
       }
     };
 
@@ -174,7 +176,11 @@ export function TradePopup({ mainStock }) {
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Make Trade</CardTitle>
+          <CardTitle>
+            <div className="flex flex-row items-center justify-between">
+              <div>Make Trade</div>
+            </div>
+          </CardTitle>
           <CardDescription>
             Based on real-time data, simulate a new trade.
           </CardDescription>
