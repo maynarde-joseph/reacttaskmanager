@@ -56,21 +56,26 @@ export default function LoginForm() {
                   </div>
                   <div>CrescentByte</div>
                 </div>
-                is the Best Way to
+                services may currently
                 <br />
-                Learn Trading
+                be down (AWS is cool)
               </h1>
               <p className=" mb-8">
-                CrescentByte presents its cutting edge stock learning and
-                simulating platform. Compete for the monthly leaderboard prize
-                and learn to become the next Warren Buffett!
+                Watch a demo here:{" "}
+                <Link
+                  href="https://youtu.be/40f_JnAWPRc"
+                  target="_blank"
+                  className="text-blue-50"
+                >
+                  <u>PRESS ME</u>
+                </Link>{" "}
               </p>
               <div className="flex flex-row items-center">
                 <a
                   href="https://app.swaggerhub.com/apis-docs/JAMJAMESHE1/CrescentByte/1.0.0"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block px-4 py-3 rounded-full text-lg tracking-wide border-2"
+                  className="inline-block px-4 py-3 rounded-full text-lg tracking-wide"
                 >
                   <u>Learn More</u>
                 </a>
